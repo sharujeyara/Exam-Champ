@@ -4,10 +4,13 @@ import Home from "./Dashboard/Home"
 import Profile from "./Dashboard/Profile"
 import Search from "./Dashboard/Search"
 
-
 // Exams
 import ExamListing from "./Exams/ExamListing"
 import ExamDetails from "./Exams/ExamDetails"
+
+
+// OnBOarding
+import OnBOarding from "./OnBoarding/Onboarding"
 
 
 
@@ -19,6 +22,7 @@ export {
     Profile,
     Search,
     ExamListing,
-    ExamDetails
+    ExamDetails,
+    OnBOarding
     
 }

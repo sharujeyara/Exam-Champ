@@ -61,43 +61,43 @@ const courses_list_2 = [
         id: 0,
         title: "Sri Lanka Administrative Service",
         abbreviation: "SLAS Exam",
-        thumbnail: require("../assets/images/thumbnail_1.png")
+        thumbnail: require("../assets/images/bg_1.png")
     },
     {
         id: 1,
         title: "Sri Lanka Education Administrative Service",
         abbreviation: "SLEAS Exam",
-        thumbnail: require("../assets/images/thumbnail_2.png")
+        thumbnail: require("../assets/images/bg_1.png")
     },
     {
         id: 2,
         title: "Sri Lanka Engineering Service",
         abbreviation: "SLES Exam",
-        thumbnail: require("../assets/images/thumbnail_3.png")
+        thumbnail: require("../assets/images/bg_1.png")
     },
     {
         id: 3,
         title: "Sri Lanka Accountants' Service",
         abbreviation: "SLAcS Exam",
-        thumbnail: require("../assets/images/thumbnail_4.png")
+        thumbnail: require("../assets/images/bg_1.png")
     },
     {
         id: 4,
         title: "Sri Lanka Planning Service",
         abbreviation: "SLPS Exam",
-        thumbnail: require("../assets/images/thumbnail_4.png")
+        thumbnail: require("../assets/images/bg_1.png")
     },
     {
         id: 5,
         title: "Sri Lanka Scientific Service",
         abbreviation: "SLSS Exam",
-        thumbnail: require("../assets/images/thumbnail_4.png")
+        thumbnail: require("../assets/images/bg_1.png")
     },
     {
         id: 6,
         title: "Sri Lanka Architectural Service",
         abbreviation: "SLArS Exam",
-        thumbnail: require("../assets/images/thumbnail_4.png")
+        thumbnail: require("../assets/images/bg_1.png")
     }
 ]
 

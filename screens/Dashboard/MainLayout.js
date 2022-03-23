@@ -20,7 +20,7 @@ import {
     COLORS, SIZES, FONTS, constants
 } from "../../constants";
 
-import react from 'react';
+
 
 
 const bottom_tabs = constants.bottom_tabs.map((bottom_tab) => ({

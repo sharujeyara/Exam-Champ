@@ -1,3 +1,27 @@
+const onboarding_screens = [
+    {
+        id: 1,
+        backgroundImage: require("../assets/images/bg.png"),
+        bannerImage: require("../assets/images/work.png"),
+        title: "Crack Your Exams",
+        description: "“If you think you can do a thing or think you can’t do a thing, you’re right.”"
+    },
+    {
+        id: 2,
+        backgroundImage: require("../assets/images/bg.png"),
+        bannerImage: require("../assets/images/onboarding.png"),
+        title: "Stay Home & Study Hard",
+        description: "“If you don’t do your revision properly, you know what’ll happen? YOU SHALL NOT PASS!”"
+    },
+    {
+        id: 3,
+        backgroundImage: require("../assets/images/bg.png"),
+        bannerImage: require("../assets/images/work.png"),
+        title: "Receive Exam Details",
+        description: "“Keep your dreams alive. Understand to achieve anything requires faith and belief in yourself, vision, hard work, determination, and dedication.”"
+    }
+]
+
 const register_options = [
     {
         id: 0,
@@ -178,6 +202,7 @@ const course_details_tabs = [
 ]
 
 export default {
+    onboarding_screens,
     register_options,
     walkthrough,
     categories,

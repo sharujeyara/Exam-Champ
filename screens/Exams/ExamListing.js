@@ -243,12 +243,13 @@ const ExamListing = ({ navigation, route }) => {
 
                 renderItem={({ item, index }) => (
                     <HorizontalExamCard
+                    sharedElementPrefix="ExamLisiting"
                         course={item}
                         containerStyle={{
                             marginVertical: SIZES.padding,
                             marginTop: 5
                         }}
-                        onPress = {() =>navigation.navigate('ExamDetails', {selectedCourse:item})}
+                        onPress = {() =>navigation.navigate('ExamDetails', {course:item,  sharedElementPrefix:"ExamLisiting"})}
                     />
                 )}
             />

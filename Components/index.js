@@ -4,7 +4,7 @@ import CategoryCard from "./CategoryCard";
 import ProfileValue from "./ProfileValue";
 import LineDivider from "./LineDivider";
 import HorizontalExamCard from "./HorizontalExamCard";
-import ExamDetailsCard from "./ExamDetailsCard";
+
 
 
 
@@ -15,6 +15,5 @@ export {
     CategoryCard,
     ProfileValue,
     LineDivider,
-    HorizontalExamCard,
-    ExamDetailsCard
+    HorizontalExamCard
 };

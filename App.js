@@ -2,7 +2,9 @@ import React from "react";
 import { Easing } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
-import { MainLayout, ExamListing, ExamDetails } from "./screens";
+import { MainLayout, ExamListing, ExamDetails,OnBOarding } from "./screens";
+
+
 
 
 const Stack = createSharedElementStackNavigator();
@@ -35,9 +37,14 @@ const App = () => {
                     useNativeDriver: true,
                     headerShown: false
                 }}
-                initialRouteName={'Dashboard'}
+                initialRouteName={'OnBoarding'}
                 detachInactiveScreens={false}
             >
+                <Stack.Screen
+                    name="OnBoarding"
+                    component={OnBOarding}
+                />
+
                 <Stack.Screen
                     name="Dashboard"
                     component={MainLayout}

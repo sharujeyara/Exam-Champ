@@ -15,7 +15,7 @@ import { SharedElement } from "react-navigation-shared-element"
 
 import { Ionicons } from '@expo/vector-icons';
 
-import { IconButton, ExamDetailsCard, LineDivider } from '../../Components'
+import { IconButton, LineDivider, HorizontalExamCard } from '../../Components'
 
 import { COLORS, SIZES, FONTS, icons, dummyData, images } from '../../constants';
 
@@ -25,7 +25,7 @@ const HEADER_HEIGHT = 250;
 
 const ExamDetails = ({ navigation, route }) => {
 
-    const { category, sharedElementPrefix } = route.params;
+    const { course, category, sharedElementPrefix } = route.params;
 
     const flatListRef = React.useRef()
     const scrollY = useSharedValue(0)
@@ -74,10 +74,10 @@ const ExamDetails = ({ navigation, route }) => {
         // Hide Title and mobile image while scroll
         const headerHideOnScrollAnimatedStyle = useAnimatedStyle(() => {
             return {
-                opacity: interpolate(scrollY.value, [80,0], [0,1], Extrapolate.CLAMP),
+                opacity: interpolate(scrollY.value, [80, 0], [0, 1], Extrapolate.CLAMP),
                 transform: [
                     {
-                        translateY:interpolate(scrollY.value, inputRange, [0,200], Extrapolate.CLAMP)
+                        translateY: interpolate(scrollY.value, inputRange, [0, 200], Extrapolate.CLAMP)
                     }
                 ]
             }
@@ -85,11 +85,11 @@ const ExamDetails = ({ navigation, route }) => {
 
         // Show title after scroll the page
         const headerShowOnScrollAnimatedStyle = useAnimatedStyle(() => {
-            return{
-                opacity: interpolate(scrollY.value, [80,0], [1,0], Extrapolate.CLAMP),
+            return {
+                opacity: interpolate(scrollY.value, [80, 0], [1, 0], Extrapolate.CLAMP),
                 transform: [
                     {
-                        translateY:interpolate(scrollY.value, inputRange, [50,130], Extrapolate.CLAMP)
+                        translateY: interpolate(scrollY.value, inputRange, [50, 130], Extrapolate.CLAMP)
                     }
                 ]
             }
@@ -108,10 +108,10 @@ const ExamDetails = ({ navigation, route }) => {
             }, headerHeightAnimatedStyle]}
             >
                 {/* Background Image */}
-                <SharedElement id={'${sharedElementPrefix}-CategoryCard-Bg-${category?.id}'}
+                <SharedElement id={'${sharedElementPrefix}-HorizontalExamCard-Bg-${course?.id}'}
                     style={[StyleSheet.absoluteFillObject]}
                 >
-                    <Image source={category?.thumbnail}
+                    <Image source={course?.thumbnail}
                         resizeMode='cover'
                         style={{
                             position: 'absolute',
@@ -126,14 +126,14 @@ const ExamDetails = ({ navigation, route }) => {
                 {/* Title */}
                 {/* After scrolling Title */}
                 <Animated.View style={[{
-                    position:'absolute',
-                    top:-80,
-                    left:0,
-                    right:0
+                    position: 'absolute',
+                    top: -80,
+                    left: 0,
+                    right: 0
                 }, headerShowOnScrollAnimatedStyle]}
                 >
-                    <Text style={{textAlign:'center', color:COLORS.primary3, fontWeight:"bold", fontSize:22}}>
-                    {category?.title}
+                    <Text style={{ textAlign: 'center', color: COLORS.primary3, fontWeight: "bold", fontSize: 22 }}>
+                        {course?.abbreviation}
                     </Text>
 
                 </Animated.View>
@@ -145,7 +145,7 @@ const ExamDetails = ({ navigation, route }) => {
                     left: 30
                 }, headerHideOnScrollAnimatedStyle]}
                 >
-                    <SharedElement id={'${sharedElementPrefix}-CategoryCard-Title-${category?.id}'}
+                    <SharedElement id={'${sharedElementPrefix}-HorizontalExamCard-Abbreviation-${course?.id}'}
                         style={[StyleSheet.absoluteFillObject]}
                     >
                         <Text style={{
@@ -156,7 +156,7 @@ const ExamDetails = ({ navigation, route }) => {
                             lineHeight: 40
                         }}
                         >
-                            {category?.title}
+                            {course?.abbreviation}
                         </Text>
 
                     </SharedElement>
@@ -212,8 +212,6 @@ const ExamDetails = ({ navigation, route }) => {
         return (
             <AnimatedFlatList
                 ref={flatListRef}
-                data={dummyData.courses_list_1}
-                
                 contentContainerStyle={{ paddingHorizontal: SIZES.padding }}
                 showsHorizontalScrollIndicator={false}
                 scrollEventThrottle={16}
@@ -223,29 +221,33 @@ const ExamDetails = ({ navigation, route }) => {
                     <View style={{
                         flexDirection: 'row',
                         alignItems: 'center',
-                        marginTop: 320,
+                        justifyContent: 'center',
+                        marginTop: 300,
                         marginBottom: SIZES.base
                     }}>
                         <Text style={{
                             flex: 1,
-                            fontSize: 24,
+                            fontSize: 22,
                             fontWeight: 'bold',
                             color: COLORS.primary3,
-                            marginBottom: SIZES.padding
+                            marginBottom: SIZES.padding,
+                            lineHeight: 36
                         }}>
-                            All Island Services
+                            {course?.title}
                         </Text>
                     </View>
                 }
 
                 renderItem={({ item, index }) => (
-                    <ExamDetailsCard
-                    
+                    <HorizontalExamCard
+
+                        sharedElementPrefix="ExamDetails"
+                        course={item}
                         containerStyle={{
                             marginVertical: SIZES.padding,
                             marginTop: 5
                         }}
-                        onPress = {() =>navigation.navigate('ExamDetails', {selectedCourse:item})}
+                        onPress={() => navigation.navigate('Home', { course: item, sharedElementPrefix: "ExamDetails" })}
                     />
                 )}
             />
@@ -264,14 +266,14 @@ const ExamDetails = ({ navigation, route }) => {
 }
 
 ExamDetails.sharedElements = (route, otherRoute, showing) => {
-    const { category, sharedElementPrefix } = route.params;
+    const { courses_list_2, sharedElementPrefix } = route.params;
     return [
         {
-            id: '${sharedElementPrefix}-CategoryCard-Bg-${category?.id}'
+            id: '${sharedElementPrefix}-HorizontalExamCard-Bg-${course?.id}'
         },
 
         {
-            id: '${sharedElementPrefix}-CategoryCard-Title-${category?.id}'
+            id: '${sharedElementPrefix}-HorizontalExamCard-Title-${course?.id}'
         }
     ]
 }
