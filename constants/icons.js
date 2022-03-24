@@ -51,6 +51,9 @@ const star_1 = require("../assets/icons/star_1.png")
 const sun = require("../assets/icons/sun.png")
 const time = require("../assets/icons/time.png")
 const web_design = require("../assets/icons/web_design.png")
+const correct = require("../assets/icons/correct.png")
+const cancel = require("../assets/icons/cancel.png")
+const fb = require("../assets/icons/fb.png")
 
 export default {
     all,
@@ -72,7 +75,6 @@ export default {
     email,
     eye,
     eye_close,
-    facebook,
     favourite,
     favourite_outline,
     filter,
@@ -104,5 +106,8 @@ export default {
     star_1,
     sun,
     time,
-    web_design
+    web_design,
+    correct,
+    cancel,
+    fb
 }

@@ -4,6 +4,9 @@ import CategoryCard from "./CategoryCard";
 import ProfileValue from "./ProfileValue";
 import LineDivider from "./LineDivider";
 import HorizontalExamCard from "./HorizontalExamCard";
+import FormInput from "./FormInput";
+import CustomSwitch from "./CustomSwitch";
+import TextIconButton from "./TextIconButton";
 
 
 
@@ -15,5 +18,8 @@ export {
     CategoryCard,
     ProfileValue,
     LineDivider,
-    HorizontalExamCard
+    HorizontalExamCard,
+    FormInput,
+    CustomSwitch,
+    TextIconButton
 };

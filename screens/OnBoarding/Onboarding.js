@@ -7,20 +7,23 @@ import {
     Animated
 } from 'react-native'
 import { TextButton } from '../../Components';
+import { useNavigation } from '@react-navigation/native';
 
 
 import { COLORS, SIZES, FONTS, icons, dummyData, images, constants } from '../../constants';
 
-const OnBOarding = (navigation) => {
+const OnBOarding = () => {
 
-    const scrollX = React.useRef(new Animated.Value(0)).current
+    const navigation = useNavigation(); 
+
+    const scrollX = new Animated.Value(0)
     const flatListRef = React.useRef()
 
-    const [currentIndex, setCurrentIndex] = React.useState(0)
+    // const [currentIndex, setCurrentIndex] = React.useState(0)
 
-    const onViewChangeRef = React.useRef(({ viewableItems, changed }) => {
-        setCurrentIndex(viewableItems[0].index)
-    })
+    // const onViewChangeRef = React.useRef(({ viewableItems, changed }) => {
+    //     setCurrentIndex(viewableItems[0].index)
+    // })
 
     const Dots = () => {
         const dotPosition = Animated.divide(scrollX, SIZES.width)
@@ -77,7 +80,7 @@ const OnBOarding = (navigation) => {
                 </View>
 
                 {/* Buttons */}
-                
+                {/* {currentIndex > constants.onboarding_screens.length + 1 && */}
                     <View style={{
                         flexDirection: 'row',
                         justifyContent: 'space-between',
@@ -89,7 +92,7 @@ const OnBOarding = (navigation) => {
                             label='Skip'
                             contentContainerStyle={{ backgroundColor: null }}
                             labelStyle={{ color: COLORS.gray60 }}
-                            onPress={() => navigation.replace("SignIn")}
+                            onPress={() => navigation.navigate("SignIn")}
 
                         />
                         <TextButton
@@ -106,23 +109,23 @@ const OnBOarding = (navigation) => {
                                     })
                                 }
                                 else {
-                                    navigation.replace('SignIn')
+                                    navigation.navigate('SignIn')
                                 }
                             }}
                         />
                     </View>
-                
 
+                
                 {/* {currentIndex == constants.onboarding_screens.length - 1 &&
                     <View style={{
-                        paddingHorizontal:SIZES.padding,
-                        marginVertical:SIZES.padding
+                        paddingHorizontal: SIZES.padding,
+                        marginVertical: SIZES.padding
                     }}
                     >
                         <TextButton
-                        label="Let's Get Started"
-                        contentContainerStyle={{height:60, borderRadius:SIZES.radius}}
-                        onPress={() => navigation.replace("SignIn")}
+                            label="Let's Get Started"
+                            contentContainerStyle={{ height: 60, borderRadius: SIZES.radius }}
+                            onPress={() => navigation.replace("SignIn")}
                         />
 
                     </View>
@@ -150,7 +153,7 @@ const OnBOarding = (navigation) => {
                     ],
                     { useNativeDriver: false }
                 )}
-                onViewableItemsChanged={onViewChangeRef.current}
+             
                 keyExtractor={(item) => '${item.id}'}
                 renderItem={({ item, index }) => {
                     return (

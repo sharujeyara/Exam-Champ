@@ -13,6 +13,11 @@ import ExamDetails from "./Exams/ExamDetails"
 import OnBOarding from "./OnBoarding/Onboarding"
 
 
+// Authentication
+import AuthLayout from "./Authentication/AuthLayout"
+import SignIn from './Authentication/SignIn'
+import SignUp from "./Authentication/SignUp"
+import ForgotPassword from "./Authentication/ForgotPassword"
 
 
 
@@ -23,6 +28,10 @@ export {
     Search,
     ExamListing,
     ExamDetails,
-    OnBOarding
+    OnBOarding,
+    AuthLayout,
+    SignIn,
+    SignUp,
+    ForgotPassword
     
 }
