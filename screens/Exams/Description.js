@@ -15,7 +15,7 @@ import { SharedElement } from "react-navigation-shared-element"
 
 import { Ionicons } from '@expo/vector-icons';
 
-import { IconButton, DetailsCard} from '../../Components'
+import { IconButton, LineDivider, DetailsCard,HorizontalExamCard} from '../../Components'
 
 import { COLORS, SIZES, FONTS, icons, dummyData, images } from '../../constants';
 
@@ -23,9 +23,9 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
 const HEADER_HEIGHT = 250;
 
-const ExamDetails = ({ navigation, route }) => {
+const Description = ({ navigation, route }) => {
 
-    const { course, category, sharedElementPrefix } = route.params;
+    const { course,detail, sharedElementPrefix } = route.params;
 
     const flatListRef = React.useRef()
     const scrollY = useSharedValue(0)
@@ -44,7 +44,7 @@ const ExamDetails = ({ navigation, route }) => {
 
         const inputRange = [0, HEADER_HEIGHT - 50]
 
-        headerSharedValue.value = withDelay(900, withTiming(0, { duration: 900 }))
+        headerSharedValue.value = withDelay(800, withTiming(0, { duration: 500 }))
 
         // Show popup mobile image
         const headerFadeAnimatedStyle = useAnimatedStyle(() => {
@@ -108,10 +108,10 @@ const ExamDetails = ({ navigation, route }) => {
             }, headerHeightAnimatedStyle]}
             >
                 {/* Background Image */}
-                <SharedElement id={'${sharedElementPrefix}-HorizontalExamCard-Bg-${course?.id}'}
+                <SharedElement id={'${sharedElementPrefix}-DetailsCard-Bg-${detail?.id}'}
                     style={[StyleSheet.absoluteFillObject]}
                 >
-                    <Image source={course?.thumbnail}
+                    <Image source={detail?.thumbnail}
                         resizeMode='cover'
                         style={{
                             position: 'absolute',
@@ -133,11 +133,11 @@ const ExamDetails = ({ navigation, route }) => {
                 }, headerShowOnScrollAnimatedStyle]}
                 >
                     <Text style={{ textAlign: 'center', color: COLORS.primary3, fontWeight: "bold", fontSize: 22 }}>
-                        {course?.abbreviation}
+                        {detail?.title}
                     </Text>
 
                 </Animated.View>
-
+{/* 
                 {/* Firstshow title */}
                 <Animated.View style={[{
                     position: 'absolute',
@@ -156,12 +156,12 @@ const ExamDetails = ({ navigation, route }) => {
                             lineHeight: 40
                         }}
                         >
-                            {course?.abbreviation}
+                            {detail?.title}
                         </Text>
 
                     </SharedElement>
 
-                </Animated.View>
+                </Animated.View> 
 
                 {/* Back button */}
 
@@ -208,7 +208,7 @@ const ExamDetails = ({ navigation, route }) => {
         )
     }
 
-    function renderResults() {
+    function renderDescription() {
         return (
             <AnimatedFlatList
             
@@ -222,6 +222,9 @@ const ExamDetails = ({ navigation, route }) => {
                 keyboardDismissMode="on-drag"
                 onScroll={onScroll}
                 ListHeaderComponent={
+
+                    
+                    
                     <View style={{
                         flexDirection: 'row',
                         alignItems: 'center',
@@ -229,6 +232,8 @@ const ExamDetails = ({ navigation, route }) => {
                         marginTop: 300,
                         marginBottom: SIZES.base
                     }}>
+                         
+                         
                         <Text style={{
                             flex: 1,
                             fontSize: 22,
@@ -237,21 +242,22 @@ const ExamDetails = ({ navigation, route }) => {
                             marginBottom: SIZES.padding,
                             lineHeight: 36
                         }}>
-                            {course?.title}
+                          {detail?.title}
                         </Text>
+                        
                     </View>
                 }
-                renderItem={({ item, index }) => (
-                    <DetailsCard
-                    sharedElementPrefix="ExamDetails"
-                        detail={item}
-                        containerStyle={{
-                            marginVertical: SIZES.padding,
-                            marginTop: 5
-                        }}
-                        onPress = {() =>navigation.navigate('Description',  {detail:item,  sharedElementPrefix:"ExamDetails"})}
-                    />
-                )}
+                // renderItem={({ item, index }) => (
+                //     <DetailsCard
+                //     sharedElementPrefix="Descriptio"
+                //         detail={item}
+                //         containerStyle={{
+                //             marginVertical: SIZES.padding,
+                //             marginTop: 5
+                //         }}
+                //         onPress = {() =>navigation.navigate('Description')}
+                //     />
+                // )}
 
             />
 
@@ -262,10 +268,8 @@ const ExamDetails = ({ navigation, route }) => {
     return (
         <View style={{ flex: 1, backgroundColor: COLORS.white }}>
 
-            {/* Title */}
-            {renderResults()}
-
-           
+            {/* Description */}
+            {renderDescription()}
 
             {/* Header */}
             {renderHeader()}
@@ -273,16 +277,6 @@ const ExamDetails = ({ navigation, route }) => {
     )
 }
 
-ExamDetails.sharedElements = (route, otherRoute, showing) => {
-    const { courses_list_2, sharedElementPrefix } = route.params;
-    return [
-        {
-            id: '${sharedElementPrefix}-HorizontalExamCard-Bg-${course?.id}'
-        },
 
-        {
-            id: '${sharedElementPrefix}-HorizontalExamCard-Title-${course?.id}'
-        }
-    ]
-}
-export default ExamDetails;
+export default Description;
+

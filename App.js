@@ -2,9 +2,19 @@ import React from "react";
 import { Easing } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
-import { MainLayout, ExamListing, ExamDetails, OnBOarding, SignIn, SignUp,ForgotPassword } from "./screens";
-
-
+import {
+    MainLayout,
+    ExamListing,
+    ExamDetails,
+    OnBOarding,
+    SignIn,
+    SignUp,
+    ForgotPassword,
+    Description,
+    Pastpaper,
+    ModelPaper,
+    Guidance
+} from "./screens";
 
 
 const Stack = createSharedElementStackNavigator();
@@ -74,6 +84,26 @@ const App = () => {
                 <Stack.Screen
                     name="ExamDetails"
                     component={ExamDetails}
+                />
+
+                <Stack.Screen
+                    name="Description"
+                    component={Description}
+                />
+
+                <Stack.Screen
+                    name="Pastpaper"
+                    component={Pastpaper}
+                />
+
+                <Stack.Screen
+                    name="ModelPaper"
+                    component={ModelPaper}
+                />
+
+                <Stack.Screen
+                    name="Guidance"
+                    component={Guidance}
                 />
 
             </Stack.Navigator>

@@ -45,13 +45,11 @@ const courses_list_1 = [
     {
         id: 2,
         title: "Banking Exam",
-        duration: "2h 30m",
         thumbnail: require("../assets/images/thumbnail_1.png")
     },
     {
         id: 3,
         title: "SLEAS",
-        duration: "2h 30m",
         thumbnail: require("../assets/images/thumbnail_1.png")
     },
 ]
@@ -101,30 +99,55 @@ const courses_list_2 = [
     }
 ]
 
-const top_searches = [
+const details = [
     {
         id: 0,
-        label: "Sketch"
+        title: "Description",
+
+        thumbnail: require("../assets/images/bg_1.png")
     },
     {
         id: 1,
-        label: "Modeling"
+        title: "Past paper",
+        thumbnail: require("../assets/images/bg_1.png")
     },
     {
         id: 2,
-        label: "UI/UX"
+        title: "Model Paper",
+        thumbnail: require("../assets/images/bg_1.png")
     },
     {
         id: 3,
-        label: "Web"
+        title: "Guidance",
+        thumbnail: require("../assets/images/bg_1.png")
+    }  
+]
+
+
+const top_searches = [
+    {
+        id: 0,
+       label: "SLAS"
+    },
+    {
+        id: 1,
+        label: "SLEAS"
+    },
+    {
+        id: 2,
+        label: "bank"
+    },
+    {
+        id: 3,
+        label: "Design"
     },
     {
         id: 4,
-        label: "Mobile"
+        label: "Aptitude"
     },
     {
         id: 5,
-        label: "Animation"
+        label: "MA"
     },
 ]
 
@@ -346,4 +369,5 @@ export default {
     top_searches,
     course_details,
     notificationByDays,
+    details
 }

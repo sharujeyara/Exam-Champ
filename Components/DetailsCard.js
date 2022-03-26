@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
     View,
     Text,
@@ -8,15 +8,14 @@ import {
     StyleSheet
 } from 'react-native';
 
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { SharedElement } from "react-navigation-shared-element"
 
 import { COLORS, SIZES, FONTS, icons } from '../constants';
 
 
-const HorizontalExamCard = ({ containerStyle, course, onPress }) => {
+const DetailsCard = ({ containerStyle, detail, onPress }) => {
     return (
-
 
         <TouchableOpacity style={{
             flexDirection: "row",
@@ -24,7 +23,7 @@ const HorizontalExamCard = ({ containerStyle, course, onPress }) => {
             paddingHorizontal: SIZES.padding,
             borderWidth: 1,
             borderRadius: 10,
-            height: 90,
+            height: 70,
             borderColor: COLORS.white,
             paddingTop: 5,
             backgroundColor: '#FFFFFF',
@@ -49,36 +48,36 @@ const HorizontalExamCard = ({ containerStyle, course, onPress }) => {
 
             }}
             >
-                <Ionicons name="book-sharp" size={24} color={COLORS.primary} />
+                <MaterialIcons name="description" size={24} color={COLORS.primary} />
+
             </View>
 
             {/* Title */}
-            <SharedElement id={'${sharedElementPrefix}-HorizontalExamCard-Title-${course?.id}'}
+            <SharedElement id={'${sharedElementPrefix}-DetailsCard-Title-${detail?.id}'}
                 style={[StyleSheet.absoluteFillObject]}
             >
                 <View style={{
-                    flex: 1, marginLeft: 85, marginTop: 15
+                    flex: 1, marginLeft: 85, marginTop: 23
 
                 }}>
-                    <Text style={{ color: COLORS.black, fontWeight: 'bold', fontSize: 18, lineHeight: 20 }}>
-                        {course?.title}
+                    <Text style={{ color: COLORS.black,fontWeight:'500', fontSize: 18, lineHeight: 20 }}>
+                        {detail.title}
                     </Text>
-
-
-                    <Text style={{ fontSize: 14, lineHeight: 22, color: COLORS.gray60, fontWeight: 'bold' }}>
-                        {course?.abbreviation}
-                    </Text>
-
 
                 </View>
             </SharedElement>
 
-
+            <View style={{
+                flexDirection:'row', 
+                marginLeft: 220, 
+                marginTop: 15,
+            
+            }}>
+                <MaterialCommunityIcons name="greater-than" size={24} color="black" />
+            </View>
 
 
         </TouchableOpacity>
-
     )
 }
-
-export default HorizontalExamCard;
+export default DetailsCard

@@ -7,6 +7,11 @@ import Search from "./Dashboard/Search"
 // Exams
 import ExamListing from "./Exams/ExamListing"
 import ExamDetails from "./Exams/ExamDetails"
+import Description from "./Exams/Description"
+import Pastpaper from "./Exams/Pastpaper"
+import ModelPaper from "./Exams/ModelPaper"
+import Guidance from "./Exams/Guidance"
+
 
 
 // OnBOarding
@@ -21,17 +26,24 @@ import ForgotPassword from "./Authentication/ForgotPassword"
 
 
 
+
 export {
     MainLayout,
     Home,
     Profile,
     Search,
+    
     ExamListing,
     ExamDetails,
+    Description,
+    Pastpaper,
+    ModelPaper,
+    Guidance,
+
     OnBOarding,
     AuthLayout,
     SignIn,
     SignUp,
     ForgotPassword
-    
+
 }

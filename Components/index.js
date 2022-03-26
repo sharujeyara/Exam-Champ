@@ -7,7 +7,7 @@ import HorizontalExamCard from "./HorizontalExamCard";
 import FormInput from "./FormInput";
 import CustomSwitch from "./CustomSwitch";
 import TextIconButton from "./TextIconButton";
-
+import DetailsCard from "./DetailsCard"
 
 
 
@@ -21,5 +21,6 @@ export {
     HorizontalExamCard,
     FormInput,
     CustomSwitch,
-    TextIconButton
+    TextIconButton,
+    DetailsCard
 };

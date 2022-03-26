@@ -11,7 +11,7 @@ const SignIn = ({ navigation }) => {
     const [password, setPassword] = React.useState("")
     const [emailError, setEmailError] = React.useState("")
 
-    const [showPass, setShowPass] = React.useState(false)
+    const [showPass, setShowPass] = React.useState(fals)
     const [saveMe, setSaveMe] = React.useState(false)
 
     function isEnableSignIn() {
@@ -193,7 +193,7 @@ const SignIn = ({ navigation }) => {
                     icon={icons.google}
                     iconPosition="LEFT"
                     iconStyle={{
-                        color: COLORS.secondary
+                        tintColor: null
                     }}
                     label="Continue With Google"
                     labelStyle={{

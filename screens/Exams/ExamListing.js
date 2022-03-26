@@ -15,7 +15,7 @@ import { SharedElement } from "react-navigation-shared-element"
 
 import { Ionicons } from '@expo/vector-icons';
 
-import { IconButton, HorizontalExamCard, LineDivider } from '../../Components'
+import { IconButton, HorizontalExamCard } from '../../Components'
 
 import { COLORS, SIZES, FONTS, icons, dummyData, images } from '../../constants';
 
