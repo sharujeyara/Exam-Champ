@@ -116,7 +116,7 @@ const OnBOarding = () => {
                     </View>
 
                 
-                {/* {currentIndex == constants.onboarding_screens.length - 1 &&
+              {/* {currentIndex == constants.onboarding_screens.length - 1 &&
                     <View style={{
                         paddingHorizontal: SIZES.padding,
                         marginVertical: SIZES.padding
@@ -157,7 +157,7 @@ const OnBOarding = () => {
                 keyExtractor={(item) => '${item.id}'}
                 renderItem={({ item, index }) => {
                     return (
-                        <View style={{ width: SIZES.width }}>
+                        <View key={index} style={{ width: SIZES.width }}>
 
                             {/* Header */}
                             <View style={{ flex: 3 }}>

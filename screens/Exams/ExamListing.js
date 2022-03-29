@@ -135,7 +135,7 @@ const ExamListing = ({ navigation, route }) => {
                 }, headerShowOnScrollAnimatedStyle]}
                 >
                     <Text style={{textAlign:'center', color:COLORS.primary3, fontWeight:"bold", fontSize:22}}>
-                    {category?.title}
+                    {category.title}
                     </Text>
 
                 </Animated.View>
@@ -223,7 +223,7 @@ const ExamListing = ({ navigation, route }) => {
                 keyboardDismissMode="on-drag"
                 onScroll={onScroll}
                 ListHeaderComponent={
-                    <View style={{
+                    <View  style={{
                         flexDirection: 'row',
                         alignItems: 'center',
                         marginTop: 320,
@@ -256,7 +256,7 @@ const ExamListing = ({ navigation, route }) => {
         )
     }
     return (
-        <View style={{ flex: 1, backgroundColor: COLORS.white }}>
+        <View style={{  flex: 1, backgroundColor: COLORS.white }}>
 
             {/* Results */}
             {renderResults()}

@@ -1,7 +1,7 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 
-import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth'
+import {getAuth} from 'firebase/auth'
+
 const firebaseConfig = {
   apiKey: "AIzaSyDDOSUu5ayh66y2DWztYe6KwthhRy9ok6s",
   authDomain: "examchamp-582b8.firebaseapp.com",
@@ -12,26 +12,32 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
 // init Services
-const auth = getAuth()
+const auth = getAuth(app);
+
+export {auth};
 
 // signing users up
-const signupForm = document.querySelector('.signup')
-signupForm.addEventListener('submit', (e) => {
-    e.preventDefault()
+// export function signup(email, password){
+//     return createUserWithEmailAndPassword (auth, email, password, username);
+// }
 
-    const email = signupForm.email.value
-    const password = signupForm.password.value
+// const signupForm = document.querySelector('.signup')
+// signupForm.addEventListener('submit', (e) => {
+//     e.preventDefault()
 
-    createUserWithEmailAndPassword(auth, email,password)
-    .then ((cred) => {
-        console.log('user created:',cred.user)
-        signupForm.reset()
-    })
-    .catch((err) => {
-        console.log(err.message)
-    })
-})
+//     const email = signupForm.email.value
+//     const password = signupForm.password.value
+
+//     createUserWithEmailAndPassword(auth, email,password)
+//     .then ((cred) => {
+//         console.log('user created:',cred.user)
+//         signupForm.reset()
+//     })
+//     .catch((err) => {
+//         console.log(err.message)
+//     })
+// })
 

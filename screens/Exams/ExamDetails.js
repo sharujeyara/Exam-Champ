@@ -222,7 +222,7 @@ const ExamDetails = ({ navigation, route }) => {
                 keyboardDismissMode="on-drag"
                 onScroll={onScroll}
                 ListHeaderComponent={
-                    <View style={{
+                    <View   style={{
                         flexDirection: 'row',
                         alignItems: 'center',
                         justifyContent: 'center',

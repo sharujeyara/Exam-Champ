@@ -8,7 +8,7 @@ import {
     COLORS, FONTS
 } from '../constants';
 
-const TextButton = ({ contentContainerStyle, disabled, label, labelStyle, onPress }) => {
+const TextButton = ({ contentContainerStyle, disabled, label, labelStyle, onPress, onClick, onSubmit }) => {
     return (
         <TouchableOpacity style={{
             alignItems: 'center',
@@ -18,6 +18,8 @@ const TextButton = ({ contentContainerStyle, disabled, label, labelStyle, onPres
         }}
             disabled={disabled}
             onPress={onPress}
+            onClick={onClick}
+            onSubmit={onSubmit}
         >
             <Text style={{
                 color: COLORS.white,

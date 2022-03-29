@@ -43,7 +43,7 @@ const Search = () => {
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={{ marginTop: SIZES.radius }}
                     renderItem={({ item, index }) => (
-                        <TextButton
+                        <TextButton  key = { index }
                             label={item.label}
                             contentContainerStyle={{
                                 paddingVertical: SIZES.radius,
@@ -85,7 +85,7 @@ const Search = () => {
                     keyExtractor={item => 'BrowseCategories-${item.id}'}
                     contentContainerStyle={{ marginTop: SIZES.radius }}
                     renderItem={({ item, index }) => (
-                        <CategoryCard
+                        <CategoryCard  key = { index }
                         sharedElementPrefix="Search"
                             category={item}
                             containerStyle={{
@@ -94,7 +94,7 @@ const Search = () => {
                                 marginTop: SIZES.radius,
                                 marginLeft: (index + 1) % 2 == 0 ? SIZES.radius : SIZES.padding
                             }}
-                            onPress={() => navigation.navigate("ExamListing", {category: item, sharedElementPrefix:"Search", otherParam: 'anything you want here'})}
+                            onPress={() => navigation.navigate("ExamListing",  {category: item, sharedElementPrefix:"Search", otherParam: 'anything you want here'})}
                         />
                     )}
 

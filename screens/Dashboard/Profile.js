@@ -13,6 +13,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { TextButton, IconButton, LineDivider, ProfileValue } from '../../Components';
 import { COLORS, SIZES, FONTS, constants, icons, dummyData, images } from '../../constants';
+import { auth } from '../../firebase';
 
 const Profile = () => {
 
@@ -120,7 +121,7 @@ const Profile = () => {
                 <ProfileValue
                     icon={icons.email}
                     label="Email"
-                    value="Sharuha98@gmail.com"
+                    value= {auth.currentUser?.email}
                 />
 
                 <LineDivider />

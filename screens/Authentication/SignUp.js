@@ -1,12 +1,46 @@
-import React from 'react'
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import React, { useRef, useState } from 'react'
+import { View, Text, TouchableOpacity, Image,Button } from 'react-native'
 import { AuthLayout } from "../";
 import { COLORS, SIZES, FONTS, icons, dummyData, images, constants } from '../../constants';
 import { FormInput, CustomSwitch, TextButton, TextIconButton } from "../../Components"
 import { utils } from "../../utils"
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 
 const SignUp = ({ navigation }) => {
+
+    
+    const handleSubmit = async (e) => {
+        createUserWithEmailAndPassword(auth, email, password)
+        // db.collection('users').add({
+        //
+        // })
+            .then((re) => { console.log("suceesfully register") })
+            .catch((error) => {
+                Alert.alert('Hey!!',"email exists")
+            })
+        
+    }
+
+    // createUserWithEmailAndPassword(auth, email, password)
+    //         .then((re) => {
+    //             // console.log(re);
+    //             console.log("Sucessfully signed up");
+    //              setDoc(doc(db, "users", re.user.uid), {
+    //                 uid: re.user.uid,
+    //                 username: username,
+    //                  email: email,
+    //                  follower: [],
+    //                  following: [],
+    //                 pic:"https://firebasestorage.googleapis.com/v0/b/plannetic-sample.appspot.com/o/profile-img.jpg?alt=media&token=06f86d6b-fa96-41e9-a079-0a56f140768e"
+    //               });
+    //         })
+    //         .catch((re) => {
+    //             console.log(re );
+    //     })
+
+
 
     const [email, setEmail] = React.useState("")
     const [username, setUsername] = React.useState("")
@@ -36,14 +70,17 @@ const SignUp = ({ navigation }) => {
             }}
             >
                 <FormInput
+
                     label="Email"
                     keyboardType='email-address'
                     autoCompleteType='email'
                     onChange={(value) => {
                         // validate email
+
                         utils.validateEmail(value, setEmailError)
                         setEmail(value)
                     }}
+
                     errorMsg={emailError}
                     appendComponent={
                         <View style={{ justifyContent: 'center', marginHorizontal: SIZES.padding, }}>
@@ -59,11 +96,14 @@ const SignUp = ({ navigation }) => {
                 />
 
                 <FormInput
+
                     label="Username"
                     containerStyle={{ marginTop: SIZES.radius }}
                     onChange={(value) => {
                         setUsername(value)
+
                     }}
+
                     errorMsg={usernameError}
                     appendComponent={
                         <View style={{ justifyContent: 'center', marginHorizontal: SIZES.padding, }}>
@@ -82,13 +122,15 @@ const SignUp = ({ navigation }) => {
                 />
 
                 <FormInput
+
                     label="Password"
                     secureTextEntry={!showPass}
-                    autoCompleteType="password"
+                    autoCompleteType="password" 
                     containerStyle={{ marginTop: SIZES.radius }}
                     onChange={(value) => {
                         utils.validatePassword(value, setPasswordError)
                         setPassword(value)
+
                     }}
                     errorMsg={passwordError}
                     appendComponent={
@@ -127,7 +169,8 @@ const SignUp = ({ navigation }) => {
                         borderRadius: SIZES.radius,
                         backgroundColor: isEnableSignUp() ? COLORS.primary : COLORS.transparentPrimary
                     }}
-                    onPress={() => navigation.navigate("Otp")}
+                    
+                    onPress={handleSubmit}
 
                 />
 
@@ -155,58 +198,59 @@ const SignUp = ({ navigation }) => {
                             lineHeight: 22
                         }}
                         onPress={() => navigation.goBack()}
+
                     />
 
                 </View>
 
                 {/* Footer */}
-            <View>
-                {/* FaceBook */}
-                <TextIconButton
-                    containerStyle={{
-                        height: 50,
-                        alignItems: 'center',
-                        borderRadius: SIZES.radius,
-                        backgroundColor: "#1967F9"
-                    }}
-                    icon={icons.fb}
-                    iconPosition='LEFT'
-                    iconStyle={{
-                        tintColor: COLORS.white,
-                        height: 25
-                    }}
-                    label="Continue With Facebook"
-                    labelStyle={{
-                        marginLeft: SIZES.radius,
-                        color: COLORS.white
-                    }}
-                    onPress={() => console.log("FB")}
-                />
+                <View>
+                    {/* FaceBook */}
+                    <TextIconButton
+                        containerStyle={{
+                            height: 50,
+                            alignItems: 'center',
+                            borderRadius: SIZES.radius,
+                            backgroundColor: "#1967F9"
+                        }}
+                        icon={icons.fb}
+                        iconPosition='LEFT'
+                        iconStyle={{
+                            tintColor: COLORS.white,
+                            height: 25
+                        }}
+                        label="Continue With Facebook"
+                        labelStyle={{
+                            marginLeft: SIZES.radius,
+                            color: COLORS.white
+                        }}
+                        onPress={() => console.log("FB")}
+                    />
 
-                {/* Google */}
-                <TextIconButton
-                    containerStyle={{
-                        height: 50,
-                        alignItems: 'center',
-                        marginTop: SIZES.padding,
-                        borderRadius: SIZES.radius,
-                        backgroundColor: COLORS.gray10
+                    {/* Google */}
+                    <TextIconButton
+                        containerStyle={{
+                            height: 50,
+                            alignItems: 'center',
+                            marginTop: SIZES.padding,
+                            borderRadius: SIZES.radius,
+                            backgroundColor: COLORS.gray10
 
-                    }}
-                    icon={icons.google}
-                    iconPosition="LEFT"
-                    iconStyle={{
-                        color: COLORS.secondary
-                    }}
-                    label="Continue With Google"
-                    labelStyle={{
-                        marginLeft: SIZES.radius
-                    }}
-                    onPress={() => console.log("Google")}
+                        }}
+                        icon={icons.google}
+                        iconPosition="LEFT"
+                        iconStyle={{
+                            color: COLORS.secondary
+                        }}
+                        label="Continue With Google"
+                        labelStyle={{
+                            marginLeft: SIZES.radius
+                        }}
+                        onPress={() => console.log("Google")}
 
-                />
+                    />
 
-            </View>
+                </View>
 
 
             </View>

@@ -134,6 +134,7 @@ const Home = () => {
                 contentContainerStyle={{ marginTop: SIZES.padding }}
                 renderItem={({ item, index }) => (
                     <VerticalExamCard
+                    key={index}
                         containerStyle={{
 
                             marginLeft: index == 0 ? SIZES.padding : SIZES.radius,

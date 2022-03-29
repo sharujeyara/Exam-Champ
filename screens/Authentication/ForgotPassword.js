@@ -1,18 +1,34 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { View, Text, Alert, Image } from 'react-native'
 import { AuthLayout } from "../";
 import { COLORS, SIZES, FONTS, icons, dummyData, images, constants } from '../../constants';
 import { FormInput, CustomSwitch, TextButton, TextIconButton } from "../../Components"
 import { utils } from "../../utils"
+import { auth } from '../../firebase';
+import { sendPasswordResetEmail } from 'firebase/auth';
+
 
 const ForgotPassword = ({ navigation }) => {
+
+    const handleSubmit = async (e) => {
+        sendPasswordResetEmail(auth, email)
+
+            .then((re) => { Alert.alert('Hey!!', "Email sent, Check your mail") },
+            )
+            .then((re) => { navigation.navigate("SignIn") }
+            )
+            .catch((error) => {
+                Alert.alert('Hey!!', "Email provided is incorrect")
+            })
+
+    }
 
     const [email, setEmail] = React.useState("")
     const [emailError, setEmailError] = React.useState("")
 
 
     function isEnableSendEmail() {
-        return email != "" &&  emailError == ""
+        return email != "" && emailError == ""
     }
 
     return (
@@ -57,19 +73,19 @@ const ForgotPassword = ({ navigation }) => {
 
             {/* Button */}
             <TextButton
-                    label="Send Email"
-                    labelStyle={{ fontSize: 24, lineHeight: 24 }}
-                    disabled={isEnableSendEmail() ? false : true}
-                    contentContainerStyle={{
-                        height: 55,
-                        alignItems: 'center',
-                        marginTop: SIZES.padding,
-                        borderRadius: SIZES.radius,
-                        backgroundColor: isEnableSendEmail() ? COLORS.primary : COLORS.transparentPrimary
-                    }}
-                    onPress={() => navigation.goBack()}
+                label="Send Email"
+                labelStyle={{ fontSize: 24, lineHeight: 24 }}
+                disabled={isEnableSendEmail() ? false : true}
+                contentContainerStyle={{
+                    height: 55,
+                    alignItems: 'center',
+                    marginTop: SIZES.padding,
+                    borderRadius: SIZES.radius,
+                    backgroundColor: isEnableSendEmail() ? COLORS.primary : COLORS.transparentPrimary
+                }}
+                onPress={handleSubmit}
 
-                />
+            />
 
         </AuthLayout>
     )

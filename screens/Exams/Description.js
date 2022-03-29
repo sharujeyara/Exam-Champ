@@ -221,9 +221,7 @@ const Description = ({ navigation, route }) => {
                 scrollEventThrottle={16}
                 keyboardDismissMode="on-drag"
                 onScroll={onScroll}
-                ListHeaderComponent={
-
-                    
+                ListHeaderComponent={   
                     
                     <View style={{
                         flexDirection: 'row',

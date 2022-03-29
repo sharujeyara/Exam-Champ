@@ -1,17 +1,33 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image,Alert } from 'react-native';
 import { AuthLayout } from "../";
 import { COLORS, SIZES, FONTS, icons, dummyData, images, constants } from '../../constants';
 import { FormInput, CustomSwitch, TextButton, TextIconButton } from "../../Components"
 import { utils } from "../../utils"
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase';
+
+
 
 const SignIn = ({ navigation }) => {
+
+    const handleSubmit = async (e) => {
+        signInWithEmailAndPassword(auth, email, password)
+            .then((re) =>
+           { navigation.navigate("Dashboard")}
+
+            )
+            .catch((error) => {
+                Alert.alert('Hey!!',"email or password incorrect")
+            })
+        
+    }
 
     const [email, setEmail] = React.useState("")
     const [password, setPassword] = React.useState("")
     const [emailError, setEmailError] = React.useState("")
 
-    const [showPass, setShowPass] = React.useState(fals)
+    const [showPass, setShowPass] = React.useState(false)
     const [saveMe, setSaveMe] = React.useState(false)
 
     function isEnableSignIn() {
@@ -122,7 +138,8 @@ const SignIn = ({ navigation }) => {
                         borderRadius: SIZES.radius,
                         backgroundColor: isEnableSignIn() ? COLORS.primary : COLORS.transparentPrimary
                     }}
-                    onPress={() => navigation.navigate("Dashboard")}
+                    
+                    onPress={handleSubmit}
 
                 />
 
