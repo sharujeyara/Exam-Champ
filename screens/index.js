@@ -4,6 +4,7 @@ import Home from "./Dashboard/Home"
 import Profile from "./Dashboard/Profile"
 import Search from "./Dashboard/Search"
 
+
 // Exams
 import ExamListing from "./Exams/ExamListing"
 import ExamDetails from "./Exams/ExamDetails"
@@ -16,6 +17,8 @@ import Guidance from "./Exams/Guidance"
 
 // OnBOarding
 import OnBOarding from "./OnBoarding/Onboarding"
+import Notification from "./OnBoarding/Notification"
+
 
 
 // Authentication
@@ -23,6 +26,8 @@ import AuthLayout from "./Authentication/AuthLayout"
 import SignIn from './Authentication/SignIn'
 import SignUp from "./Authentication/SignUp"
 import ForgotPassword from "./Authentication/ForgotPassword"
+import BottomTab from "./Dashboard/BottomTab"
+
 
 
 
@@ -32,7 +37,7 @@ export {
     Home,
     Profile,
     Search,
-    
+    BottomTab,
     ExamListing,
     ExamDetails,
     Description,
@@ -41,6 +46,8 @@ export {
     Guidance,
 
     OnBOarding,
+    Notification,
+    
     AuthLayout,
     SignIn,
     SignUp,

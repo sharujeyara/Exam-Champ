@@ -9,12 +9,17 @@ import {
 } from 'react-native';
 
 import { Shadow } from 'react-native-shadow-2';
+import Home from './Home';
+import Search from './Search';
 
-import {
-    Home,
-    Profile,
-    Search
-} from "../../screens";
+import Profile  from './Profile';
+
+
+// import {
+//     Home,
+//     Profile,
+//     Search
+// } from "../../screens";
 
 import {
     COLORS, SIZES, FONTS, constants

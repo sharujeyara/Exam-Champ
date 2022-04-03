@@ -15,8 +15,12 @@ import { COLORS, SIZES, FONTS, constants, icons, dummyData, images } from '../..
 import { VerticalExamCard } from "../../Components";
 
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native"
+
 
 const Home = () => {
+
+    const navigation = useNavigation();
 
     function renderHeader() {
         return (
@@ -33,7 +37,7 @@ const Home = () => {
                 }}>
                     <Text style={{
                         ...FONTS.h2,
-                        fontWeight:'bold',
+                        fontWeight: 'bold',
                         color: '#33354E'
                     }}>
                         Helloooo, ExamChampers!
@@ -49,7 +53,10 @@ const Home = () => {
 
                 {/* Notifications */}
                 <View>
-                    <TouchableOpacity>
+                    <TouchableOpacity 
+                     onPress={() => navigation.navigate("Notification")}
+
+                    >
                         <View style={{
                             marginRight: 15
                         }}
@@ -110,9 +117,9 @@ const Home = () => {
                 />
 
                 {/* Button */}
-                <TouchableOpacity
+                <TouchableOpacity onPress={() => navigation.navigate("Search")}
                     style={{ borderRadius: 10, paddingVertical: 10, paddingHorizontal: 30, flexDirection: 'row', backgroundColor: '#fff' }}
-                    onPress={() => { }}>
+                  >
 
                     <Text style={{ marginLeft: 10, color: '#33354E', fontWeight: 'bold' }}>
                         Start Learning
@@ -134,7 +141,7 @@ const Home = () => {
                 contentContainerStyle={{ marginTop: SIZES.padding }}
                 renderItem={({ item, index }) => (
                     <VerticalExamCard
-                    key={index}
+                        key={index}
                         containerStyle={{
 
                             marginLeft: index == 0 ? SIZES.padding : SIZES.radius,
@@ -143,6 +150,8 @@ const Home = () => {
 
                         }}
                         course={item}
+                        onPress = {() =>navigation.navigate('ExamDetails', {course:item,  sharedElementPrefix:"ExamLisiting"})}
+
                     />
                 )}
             />

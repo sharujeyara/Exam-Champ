@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import Animated, {
     Extrapolate,
     interpolate,
@@ -15,7 +15,7 @@ import { SharedElement } from "react-navigation-shared-element"
 
 import { Ionicons } from '@expo/vector-icons';
 
-import { IconButton, LineDivider, DetailsCard,HorizontalExamCard} from '../../Components'
+import { IconButton, LineDivider, DetailsCard, HorizontalExamCard, TextButton } from '../../Components'
 
 import { COLORS, SIZES, FONTS, icons, dummyData, images } from '../../constants';
 
@@ -25,7 +25,7 @@ const HEADER_HEIGHT = 250;
 
 const Description = ({ navigation, route }) => {
 
-    const { course,detail, sharedElementPrefix } = route.params;
+    const { course, detail, sharedElementPrefix } = route.params;
 
     const flatListRef = React.useRef()
     const scrollY = useSharedValue(0)
@@ -132,12 +132,12 @@ const Description = ({ navigation, route }) => {
                     right: 0
                 }, headerShowOnScrollAnimatedStyle]}
                 >
-                    <Text style={{ textAlign: 'center', color: COLORS.primary3, fontWeight: "bold", fontSize: 22 }}>
+                    <Text style={{ textAlign: 'center', color: COLORS.primary3, fontWeight: "bold", fontSize: 28 }}>
                         {detail?.title}
                     </Text>
 
                 </Animated.View>
-{/* 
+                {/* 
                 {/* Firstshow title */}
                 <Animated.View style={[{
                     position: 'absolute',
@@ -145,7 +145,7 @@ const Description = ({ navigation, route }) => {
                     left: 30
                 }, headerHideOnScrollAnimatedStyle]}
                 >
-                    <SharedElement id={'${sharedElementPrefix}-HorizontalExamCard-Abbreviation-${course?.id}'}
+                    <SharedElement id={'${sharedElementPrefix}-DetailsCard-Abbreviation-${course?.id}'}
                         style={[StyleSheet.absoluteFillObject]}
                     >
                         <Text style={{
@@ -161,7 +161,7 @@ const Description = ({ navigation, route }) => {
 
                     </SharedElement>
 
-                </Animated.View> 
+                </Animated.View>
 
                 {/* Back button */}
 
@@ -210,59 +210,154 @@ const Description = ({ navigation, route }) => {
 
     function renderDescription() {
         return (
+
             <AnimatedFlatList
-            
+
                 ref={flatListRef}
-                data={dummyData.details}
-                listKey='Details'
-                keyExtractor={item => 'Details-${item.id}'}
-                contentContainerStyle={{ paddingHorizontal: SIZES.padding }}
                 showsHorizontalScrollIndicator={false}
                 scrollEventThrottle={16}
                 keyboardDismissMode="on-drag"
                 onScroll={onScroll}
-                ListHeaderComponent={   
-                    
-                    <View style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginTop: 300,
-                        marginBottom: SIZES.base
-                    }}>
-                         
-                         
-                        <Text style={{
-                            flex: 1,
-                            fontSize: 22,
-                            fontWeight: 'bold',
-                            color: COLORS.primary3,
-                            marginBottom: SIZES.padding,
-                            lineHeight: 36
+                ListHeaderComponent={
+                    <ScrollView
+
+                        style={{
+                            marginLeft: SIZES.padding,
+                            marginRight: SIZES.padding
                         }}>
-                          {detail?.title}
-                        </Text>
-                        
-                    </View>
+                        <View style={{ marginTop: 300 }}>
+                            <Text style={{
+                                color: COLORS.primary3,
+                                textAlign: 'justify',
+                                marginBottom: 10,
+                                fontSize: 24,
+                                fontWeight: 'bold'
+                            }}>
+                                What is SLAS?
+                            </Text>
+                        </View>
+
+                        <View >
+                            <Text style={{
+                                color: COLORS.black,
+                                textAlign: 'justify',
+                                lineHeight: 24,
+                                fontSize: 18
+                            }}>
+                                The administration of coastal areas of Ceylon was carried out by the officers of East India Company operated from Madras since the coastal areas of the island was brought under the control of British in 1796.
+                            </Text>
+                            <Text style={{
+                                color: COLORS.black,
+                                textAlign: 'justify',
+                                lineHeight: 24,
+                                fontSize: 18
+                            }}
+                            >
+                                Further, it has been established as Sri Lanka Administrative Service in 1972 after Sri Lanka became a republic. At present Sri Lanka Administrative Service is implemented as the major civil service of the country.
+                            </Text>
+
+                        </View>
+
+                        <View>
+                            <Text style={{
+                                color: COLORS.primary3,
+                                textAlign: 'justify',
+                                marginBottom: 10,
+                                marginTop: 20,
+                                fontSize: 24,
+                                fontWeight: 'bold'
+                            }}>
+                                Qualifications for requirements
+                            </Text>
+                        </View>
+
+                        <View >
+                            <Text style={{
+                                color: COLORS.black,
+                                textAlign: 'justify',
+                                lineHeight: 24,
+                                fontSize: 18
+                            }}>
+                                Shall be a citizen of Sri Lanka, Shall have a excellent moral character
+                                and  Shall be physically and mentally fit to serve in any part of the Island.
+                                {'\n'}{'\n'}
+                                (b) Educational qualifications
+                                {'\n'}
+                                Shall have possessed a degree from a university recognized by the University Grants
+                                Commission or an institution recognized by the University Grants Commission as an
+                                institution for awarding degrees.
+                                {'\n'}{'\n'}
+                                Note: Effective date of the degree shall be a date on or before the application closing
+                                date.
+                                {'\n'}{'\n'}
+                                (c) Age
+                                {'\n'}
+                                Shall not be less than twenty two (22) years of age and not have reached 28 years of age
+                                on the application closing date.
+                                {'\n'} {'\n'}
+                                (d) Restrictions regarding qualifications
+                                {'\n'}
+                                i. No person is allowed to sit the open competitive examination for more than two (2)
+                                sittings. (Number of sittings at the examinations to recruit Grade III of Sri Lanka
+                                Administrative Service under previous service minutes will not be considered)
+                                {'\n'} {'\n'}
+                                ii. Requisite qualifications for this examination shall have been completed in every
+                                aspect by on or before the application closing date.
+                                {'\n'} {'\n'}
+                                iii. No person ordained in any religious sect shall be permitted to apply or sit for this
+                                competitive examination.
+
+                            </Text>
+                        </View>
+
+                        <View>
+                            <Text style={{
+                                color: COLORS.primary3,
+                                textAlign: 'justify',
+                                marginBottom: 10,
+                                marginTop: 10,
+                                fontSize: 24,
+                                fontWeight: 'bold'
+                            }}>
+                                Open for the application
+                            </Text>
+
+                            <TextButton
+                                label="Apply"
+                                labelStyle={{ fontSize: 24, lineHeight: 24 }}
+                               
+                                contentContainerStyle={{
+                                    height: 55,
+                                    alignItems: 'center',
+                                
+                                    borderRadius: SIZES.radius,
+                                    marginBottom:SIZES.padding
+                                  
+                                }}
+
+                                onPress={() => {}}
+
+                            />
+                        </View>
+
+
+                    </ScrollView>
                 }
-                // renderItem={({ item, index }) => (
-                //     <DetailsCard
-                //     sharedElementPrefix="Descriptio"
-                //         detail={item}
-                //         containerStyle={{
-                //             marginVertical: SIZES.padding,
-                //             marginTop: 5
-                //         }}
-                //         onPress = {() =>navigation.navigate('Description')}
-                //     />
-                // )}
+
 
             />
+
+
+
+
+
+
+
 
         )
     }
 
-  
+
     return (
         <View style={{ flex: 1, backgroundColor: COLORS.white }}>
 

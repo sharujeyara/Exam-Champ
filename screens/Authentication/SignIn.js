@@ -1,27 +1,47 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image,Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Alert, Button } from 'react-native';
 import { AuthLayout } from "../";
 import { COLORS, SIZES, FONTS, icons, dummyData, images, constants } from '../../constants';
 import { FormInput, CustomSwitch, TextButton, TextIconButton } from "../../Components"
 import { utils } from "../../utils"
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase';
+import  { auth } from '../../firebase';
+import { useNavigation } from "@react-navigation/native"
 
 
+const SignIn = () => {
 
-const SignIn = ({ navigation }) => {
+    const navigation = useNavigation();
 
     const handleSubmit = async (e) => {
         signInWithEmailAndPassword(auth, email, password)
-            .then((re) =>
-           { navigation.navigate("Dashboard")}
+            .then((re) => {
+                 navigation.push("Dashboard") 
+                 console.log(re)
+                }
 
             )
             .catch((error) => {
-                Alert.alert('Hey!!',"email or password incorrect")
+                Alert.alert('Hey!!', "email or password incorrect")
+                console.log(error)
             })
-        
+
     }
+
+    // const handleGoogle = async (e) => {
+      
+    //     signInWithPopup(auth, new GoogleAuthProvider())
+    //         .then((re) => {
+    //             const username = re.username.displayName;
+    //             const email = re.user.email;
+
+    //         })
+    //         .catch((error) => {
+    //             Alert.alert('Hey!!', "email or password incorrect")
+    //         })
+
+    // }
+
 
     const [email, setEmail] = React.useState("")
     const [password, setPassword] = React.useState("")
@@ -138,8 +158,10 @@ const SignIn = ({ navigation }) => {
                         borderRadius: SIZES.radius,
                         backgroundColor: isEnableSignIn() ? COLORS.primary : COLORS.transparentPrimary
                     }}
-                    
+
                     onPress={handleSubmit}
+                    // onPress={() => navigation.navigate("Dashboard")}
+
 
                 />
 
@@ -216,7 +238,7 @@ const SignIn = ({ navigation }) => {
                     labelStyle={{
                         marginLeft: SIZES.radius
                     }}
-                    onPress={() => console.log("Google")}
+                    // onPress={handleGoogle}
 
                 />
 

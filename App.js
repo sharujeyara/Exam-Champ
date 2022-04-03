@@ -13,7 +13,10 @@ import {
     Description,
     Pastpaper,
     ModelPaper,
-    Guidance
+    Guidance,
+    Notification,
+
+
 } from "./screens";
 
 
@@ -74,6 +77,13 @@ const App = () => {
                     name="Dashboard"
                     component={MainLayout}
                 />
+
+                <Stack.Screen
+                    name="Notification"
+                    component={Notification}
+                />
+
+
 
                 <Stack.Screen
                     name="ExamListing"

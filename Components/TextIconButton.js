@@ -11,7 +11,8 @@ const TextIconButton = ({
     icon,
     iconPosition,
     iconStyle,
-    onPress
+    onPress,
+    onSubmit
 }) => {
     return (
         <TouchableOpacity style={{
@@ -21,6 +22,7 @@ const TextIconButton = ({
             ...containerStyle
         }}
             onPress={onPress}
+            onSubmit={onSubmit}
         >
 
             {iconPosition == "LEFT" &&

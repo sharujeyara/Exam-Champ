@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { View, Text, TouchableOpacity, Image,Button } from 'react-native'
+import { View, Text, TouchableOpacity, Image, Alert } from 'react-native'
 import { AuthLayout } from "../";
 import { COLORS, SIZES, FONTS, icons, dummyData, images, constants } from '../../constants';
 import { FormInput, CustomSwitch, TextButton, TextIconButton } from "../../Components"
@@ -10,18 +10,30 @@ import { auth } from '../../firebase';
 
 const SignUp = ({ navigation }) => {
 
-    
+
     const handleSubmit = async (e) => {
         createUserWithEmailAndPassword(auth, email, password)
-        // db.collection('users').add({
-        //
-        // })
-            .then((re) => { console.log("suceesfully register") })
-            .catch((error) => {
-                Alert.alert('Hey!!',"email exists")
+            .then
+            ((re) => {
+                navigation.navigate("Dashboard") 
+                console.log(re)
+                // setDoc(doc(db, "users", re.user.uid), {
+                //     uid: re.user.uid,
+                //     username: username,
+                //     email: email,
+                //     follower: [],
+                //     following: [],
+                //     pic: "https://firebasestorage.googleapis.com/v0/b/plannetic-sample.appspot.com/o/profile-img.jpg?alt=media&token=06f86d6b-fa96-41e9-a079-0a56f140768e"
+                // });
             })
-        
+            .catch((error) => {
+                Alert.alert('Hey!!', "email exists")
+                console.log(error)
+            })
+
     }
+
+
 
     // createUserWithEmailAndPassword(auth, email, password)
     //         .then((re) => {
@@ -125,7 +137,7 @@ const SignUp = ({ navigation }) => {
 
                     label="Password"
                     secureTextEntry={!showPass}
-                    autoCompleteType="password" 
+                    autoCompleteType="password"
                     containerStyle={{ marginTop: SIZES.radius }}
                     onChange={(value) => {
                         utils.validatePassword(value, setPasswordError)
@@ -169,7 +181,7 @@ const SignUp = ({ navigation }) => {
                         borderRadius: SIZES.radius,
                         backgroundColor: isEnableSignUp() ? COLORS.primary : COLORS.transparentPrimary
                     }}
-                    
+
                     onPress={handleSubmit}
 
                 />
@@ -239,14 +251,11 @@ const SignUp = ({ navigation }) => {
                         }}
                         icon={icons.google}
                         iconPosition="LEFT"
-                        iconStyle={{
-                            color: COLORS.secondary
-                        }}
                         label="Continue With Google"
                         labelStyle={{
                             marginLeft: SIZES.radius
                         }}
-                        onPress={() => console.log("Google")}
+                    // onPress={handleGoogle}
 
                     />
 

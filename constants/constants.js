@@ -106,6 +106,7 @@ const screens = {
     home: "Home",
     search: "Search",
     profile: "Profile"
+   
 }
 
 const bottom_tabs = [

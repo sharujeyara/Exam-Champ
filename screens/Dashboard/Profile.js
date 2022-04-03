@@ -14,8 +14,25 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { TextButton, IconButton, LineDivider, ProfileValue } from '../../Components';
 import { COLORS, SIZES, FONTS, constants, icons, dummyData, images } from '../../constants';
 import { auth } from '../../firebase';
+import { signOut } from 'firebase/auth';
 
-const Profile = () => {
+
+const Profile = ({navigation}) => {
+
+    
+    const handlelogout = async (e) => {
+        signOut(auth)
+            .then((re) => { 
+                console.log('The user signed out')
+                navigation.navigate("SignIn")
+            }
+
+            )
+            .catch((error) => {
+                console.log(error)
+            })
+
+    }
 
     function renderHeader() {
         return (
@@ -113,7 +130,8 @@ const Profile = () => {
                 <ProfileValue
                     icon={icons.profile}
                     label="Name"
-                    value="Sharuha Jeyarajasingam"
+                    // value={name || ""}
+                    // onChange={(e) => setName(e.target.value)}
                 />
 
                 <LineDivider />
@@ -146,6 +164,7 @@ const Profile = () => {
 
     function renderProfileSection2() {
         return(
+            <View>
             <View style={styles.profileSectionContainer}>
                 <ProfileValue
                     icon={icons.password}
@@ -155,6 +174,26 @@ const Profile = () => {
 
                 
             </View>
+
+            <TextButton
+                    label="Log Out"
+                    labelStyle={{ fontSize: 24, lineHeight: 24 }}
+                    
+                    contentContainerStyle={{
+                        height: 55,
+                        alignItems: 'center',
+                        marginTop: SIZES.padding,
+                        borderRadius: SIZES.radius,
+                        
+                    }}
+
+                    onPress={handlelogout}
+
+                />
+            </View>
+
+
+            
         )
     }
     return (
