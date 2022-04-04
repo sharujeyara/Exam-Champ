@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -8,15 +8,39 @@ import {
 } from 'react-native';
 
 import { FlatList } from "react-native-gesture-handler";
-import {useNavigation} from "@react-navigation/native"
+import { useNavigation } from "@react-navigation/native"
 import Animated from 'react-native-reanimated';
 // import { Animated, Extrapolate, interpolate, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue } from "react-native-reanimated";
 
 import { TextButton, CategoryCard } from '../../Components';
 import { COLORS, SIZES, FONTS, constants, icons, dummyData, images } from '../../constants';
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../../firebase"
 
 
 const Search = () => {
+
+
+    const [category, setCategory] = useState(null)
+
+    const getCategory = () => {
+        try {
+            const ref = collection(db, "Categories")
+            onSnapshot(ref, (snapshot) =>
+                setCategory((snapshot.docs.map((cat) => ({ id: cat.id, ...cat.data() }))))
+            )
+
+        }
+        catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    useEffect(() => {
+        getCategory()
+        // console.log(category[0])
+    }, [])
 
     const navigation = useNavigation();
 
@@ -43,7 +67,7 @@ const Search = () => {
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={{ marginTop: SIZES.radius }}
                     renderItem={({ item, index }) => (
-                        <TextButton  key = { index }
+                        <TextButton key={index}
                             label={item.label}
                             contentContainerStyle={{
                                 paddingVertical: SIZES.radius,
@@ -77,26 +101,42 @@ const Search = () => {
                     Browse Categories
                 </Text>
 
-                <FlatList
-                    data={dummyData.categories}
-                    numColumns={2}
-                    scrollEnabled={false}
-                    listKey="BrowseCategories"
-                    keyExtractor={item => 'BrowseCategories-${item.id}'}
-                    contentContainerStyle={{ marginTop: SIZES.radius }}
-                    renderItem={({ item, index }) => (
-                        <CategoryCard  key = { index }
+                {/* {category && category.map((item, index) => (
+                    <CategoryCard key={item.id}
                         sharedElementPrefix="Search"
-                            category={item}
-                            containerStyle={{
-                                height: 130,
-                                width: (SIZES.width - (SIZES.padding * 2) - SIZES.radius) / 2,
-                                marginTop: SIZES.radius,
-                                marginLeft: (index + 1) % 2 == 0 ? SIZES.radius : SIZES.padding
-                            }}
-                            onPress={() => navigation.navigate("ExamListing",  {category: item, sharedElementPrefix:"Search", otherParam: 'anything you want here'})}
-                        />
-                    )}
+                        category={item}
+                        containerStyle={{
+                            height: 130,
+                            width: 350,
+                            marginTop: SIZES.radius,
+                            marginLeft: SIZES.padding
+                        }}
+                        onPress={() => navigation.navigate("ExamListing", { category: item, sharedElementPrefix: "Search", otherParam: 'anything you want here' })}
+                    />
+                ))
+                } */}
+
+
+                < FlatList
+                    data = {category }
+                    numColumns = {2}
+                    scrollEnabled = { false}
+                    // listKey="BrowseCategories"
+                    keyExtractor = { item => 'item.id..toString()'}
+                contentContainerStyle={{ marginTop: SIZES.radius }}
+                renderItem={({ item, index }) => (
+                    <CategoryCard key={index}
+                        sharedElementPrefix="Search"
+                        category={item}
+                        containerStyle={{
+                            height: 130,
+                            width: (SIZES.width - (SIZES.padding * 2) - SIZES.radius) / 2,
+                            marginTop: SIZES.radius,
+                            marginLeft: (index + 1) % 2 == 0 ? SIZES.radius : SIZES.padding
+                        }}
+                        onPress={() => navigation.navigate("ExamListing", { category: item, sharedElementPrefix: "Search", otherParam: 'anything you want here' })}
+                    />
+                )}
 
                 />
             </View>
@@ -121,24 +161,24 @@ const Search = () => {
                     paddingHorizontal: SIZES.radius,
                     borderRadius: SIZES.radius,
                     backgroundColor: COLORS.white,
-                    borderWidth:2,
-                    borderColor:COLORS.gray10
+                    borderWidth: 2,
+                    borderColor: COLORS.gray10
                 }}
                 >
                     <Image source={icons.search}
-                    style={{width:25, height:25, tintColor:COLORS.gray50}}
+                        style={{ width: 25, height: 25, tintColor: COLORS.gray50 }}
                     />
 
                     <TextInput style={{
-                        flex:1,
-                        marginLeft:SIZES.base,
-                        lineHeight:22,
-                        fontWeight:'bold',
-                    
+                        flex: 1,
+                        marginLeft: SIZES.base,
+                        lineHeight: 22,
+                        fontWeight: 'bold',
+
                     }}
-                    value=""
-                    placeholder='Search for Exams'
-                    placeholderTextColor={COLORS.gray20}
+                        value=""
+                        placeholder='Search for Exams'
+                        placeholderTextColor={COLORS.gray20}
                     />
                 </View>
             </Animated.View>

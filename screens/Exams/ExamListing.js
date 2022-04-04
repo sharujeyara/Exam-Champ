@@ -113,7 +113,7 @@ const ExamListing = ({ navigation, route }) => {
                 <SharedElement id={'${sharedElementPrefix}-CategoryCard-Bg-${category?.id}'}
                     style={[StyleSheet.absoluteFillObject]}
                 >
-                    <Image source={category?.thumbnail}
+                    <Image source={{uri:category.Bg}}
                         resizeMode='cover'
                         style={{
                             position: 'absolute',
@@ -135,7 +135,7 @@ const ExamListing = ({ navigation, route }) => {
                 }, headerShowOnScrollAnimatedStyle]}
                 >
                     <Text style={{textAlign:'center', color:COLORS.primary3, fontWeight:"bold", fontSize:22}}>
-                    {category.title}
+                    {category.C_Name}
                     </Text>
 
                 </Animated.View>
@@ -158,7 +158,7 @@ const ExamListing = ({ navigation, route }) => {
                             lineHeight: 40
                         }}
                         >
-                            {category?.title}
+                            {category.C_Name}
                         </Text>
 
                     </SharedElement>

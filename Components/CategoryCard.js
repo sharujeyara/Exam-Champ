@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {
     View,
     Text,
@@ -13,7 +13,13 @@ import {
 } from '../constants';
 
 const CategoryCard = ({ sharedElementPrefix, category, containerStyle, onPress }) => {
+
+    useEffect(() => {
+        console.log("Hi" +category)
+    }, [])
     return (
+
+
         <TouchableOpacity onPress={onPress}
             style={{ height: 150, width: 200, ...containerStyle }}
         >
@@ -21,7 +27,7 @@ const CategoryCard = ({ sharedElementPrefix, category, containerStyle, onPress }
             <SharedElement id={'${sharedElementPrefix}-CategoryCard-Bg-${category?.id}'}
                 style={[StyleSheet.absoluteFillObject]}
             >
-                <Image source={category?.thumbnail}
+                <Image source={{uri:category.Bg}}
                     resizeMode='cover'
                     style={{
                         height: "100%",
@@ -39,7 +45,7 @@ const CategoryCard = ({ sharedElementPrefix, category, containerStyle, onPress }
             >
                 <View style={{ position: 'absolute', bottom: 40, left: 10 }}>
                     <Text style={{ position: 'absolute', color: COLORS.white, fontWeight: 'bold', fontSize: 18, lineHeight: 20 }}>
-                        {category?.title}
+                        {category.C_Name}
                     </Text>
                 </View>
 

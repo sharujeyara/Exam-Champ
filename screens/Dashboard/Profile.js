@@ -15,16 +15,18 @@ import { TextButton, IconButton, LineDivider, ProfileValue } from '../../Compone
 import { COLORS, SIZES, FONTS, constants, icons, dummyData, images } from '../../constants';
 import { auth } from '../../firebase';
 import { signOut } from 'firebase/auth';
+import { useNavigation } from "@react-navigation/native"
 
 
-const Profile = ({navigation}) => {
+const Profile = () => {
 
-    
+    const navigation = useNavigation();
+
     const handlelogout = async (e) => {
         signOut(auth)
             .then((re) => { 
-                console.log('The user signed out')
-                navigation.navigate("SignIn")
+                console.log('The user signed out');
+                navigation.push("SignIn");
             }
 
             )
