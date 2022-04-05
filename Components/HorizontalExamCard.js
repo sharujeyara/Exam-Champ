@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
     View,
     Text,
@@ -14,9 +14,13 @@ import { SharedElement } from "react-navigation-shared-element"
 import { COLORS, SIZES, FONTS, icons } from '../constants';
 
 
-const HorizontalExamCard = ({ containerStyle, course, onPress }) => {
-    return (
+const HorizontalExamCard = ({ containerStyle, exam, onPress }) => {
 
+    useEffect(() => {
+        console.log(exam)
+    }, [])
+
+    return (
 
         <TouchableOpacity style={{
             flexDirection: "row",
@@ -61,12 +65,12 @@ const HorizontalExamCard = ({ containerStyle, course, onPress }) => {
 
                 }}>
                     <Text style={{ color: COLORS.black, fontWeight: 'bold', fontSize: 18, lineHeight: 20 }}>
-                        {course?.title}
+                        {exam.Title}
                     </Text>
 
 
                     <Text style={{ fontSize: 14, lineHeight: 22, color: COLORS.gray60, fontWeight: 'bold' }}>
-                        {course?.abbreviation}
+                        {exam.Abbre}
                     </Text>
 
 

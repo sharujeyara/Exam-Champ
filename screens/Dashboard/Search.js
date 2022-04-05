@@ -14,7 +14,7 @@ import Animated from 'react-native-reanimated';
 
 import { TextButton, CategoryCard } from '../../Components';
 import { COLORS, SIZES, FONTS, constants, icons, dummyData, images } from '../../constants';
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot ,orderBy, query} from "firebase/firestore";
 import { db } from "../../firebase"
 
 
@@ -26,7 +26,8 @@ const Search = () => {
     const getCategory = () => {
         try {
             const ref = collection(db, "Categories")
-            onSnapshot(ref, (snapshot) =>
+            const q = query(ref,  orderBy("C_Name", "desc"));
+            onSnapshot(q, (snapshot) =>
                 setCategory((snapshot.docs.map((cat) => ({ id: cat.id, ...cat.data() }))))
             )
 
@@ -119,10 +120,10 @@ const Search = () => {
 
                 < FlatList
                     data = {category }
-                    numColumns = {2}
+                    numColumns = {0}
                     scrollEnabled = { false}
                     // listKey="BrowseCategories"
-                    keyExtractor = { item => 'item.id..toString()'}
+                    keyExtractor = { item => 'examitem.id..toString()'}
                 contentContainerStyle={{ marginTop: SIZES.radius }}
                 renderItem={({ item, index }) => (
                     <CategoryCard key={index}
@@ -130,9 +131,10 @@ const Search = () => {
                         category={item}
                         containerStyle={{
                             height: 130,
-                            width: (SIZES.width - (SIZES.padding * 2) - SIZES.radius) / 2,
+                            width: 350,
                             marginTop: SIZES.radius,
-                            marginLeft: (index + 1) % 2 == 0 ? SIZES.radius : SIZES.padding
+                            marginLeft: SIZES.padding,
+                            marginRight:SIZES.padding
                         }}
                         onPress={() => navigation.navigate("ExamListing", { category: item, sharedElementPrefix: "Search", otherParam: 'anything you want here' })}
                     />

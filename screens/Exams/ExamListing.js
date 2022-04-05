@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
 import Animated, {
     Extrapolate,
@@ -19,12 +19,38 @@ import { IconButton, HorizontalExamCard } from '../../Components'
 
 import { COLORS, SIZES, FONTS, icons, dummyData, images } from '../../constants';
 
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "../../firebase"
+
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
 const HEADER_HEIGHT = 250;
 
 
 const ExamListing = ({ navigation, route }) => {
+
+    const [exam, setExam] = useState(null)
+
+    const getExam = () => {
+        try {
+            const ref = collection(db, "Categories", category.id, 'Exams')
+            // const q = query(ref, where('category.id', isEqualTo=='Exams'))
+            onSnapshot(ref, (snapshot) =>
+                setExam((snapshot.docs.map((ex) => ({ id: ex.id, ...ex.data() }))))
+            )
+
+        }
+        catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    useEffect(() => {
+        getExam()
+    }, [])
+
+
 
     const { category, sharedElementPrefix } = route.params;
 
@@ -215,8 +241,8 @@ const ExamListing = ({ navigation, route }) => {
         return (
             <AnimatedFlatList
                 ref={flatListRef}
-                data={dummyData.courses_list_2}
-                keyExtractor={item => 'Results-${item.id}'}
+                data={exam}
+                keyExtractor={item => 'item.id..toString()'}
                 contentContainerStyle={{ paddingHorizontal: SIZES.padding }}
                 showsHorizontalScrollIndicator={false}
                 scrollEventThrottle={16}
@@ -236,7 +262,7 @@ const ExamListing = ({ navigation, route }) => {
                             color: COLORS.primary3,
                             marginBottom: SIZES.padding
                         }}>
-                            All Island Services
+                            All Island Exams
                         </Text>
                     </View>
                 }
@@ -244,7 +270,7 @@ const ExamListing = ({ navigation, route }) => {
                 renderItem={({ item, index }) => (
                     <HorizontalExamCard
                     sharedElementPrefix="ExamLisiting"
-                        course={item}
+                        exam={item}
                         containerStyle={{
                             marginVertical: SIZES.padding,
                             marginTop: 5
