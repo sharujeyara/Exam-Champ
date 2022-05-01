@@ -8,7 +8,9 @@ import FormInput from "./FormInput";
 import CustomSwitch from "./CustomSwitch";
 import TextIconButton from "./TextIconButton";
 import DetailsCard from "./DetailsCard"
-
+import DescriptionCard from "./DescriptionCard";
+import PastpaperCard from "./PastpaperCard"
+import ModelpaperCard from "./ModelpaperCard"
 
 
 
@@ -22,5 +24,8 @@ export {
     FormInput,
     CustomSwitch,
     TextIconButton,
-    DetailsCard
+    DetailsCard,
+    DescriptionCard,
+    PastpaperCard,
+    ModelpaperCard
 };

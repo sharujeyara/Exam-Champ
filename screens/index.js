@@ -12,12 +12,13 @@ import Description from "./Exams/Description"
 import Pastpaper from "./Exams/Pastpaper"
 import ModelPaper from "./Exams/ModelPaper"
 import Guidance from "./Exams/Guidance"
-
+import Pdfview from "./Exams/Pdfview"
 
 
 // OnBOarding
-import OnBOarding from "./OnBoarding/Onboarding"
-import Notification from "./OnBoarding/Notification"
+import OnBOarding from "./Subfolders/Onboarding"
+import Notification from "./Subfolders/Notification"
+import Feedback from "./Subfolders/Feedback"
 
 
 
@@ -27,6 +28,7 @@ import SignIn from './Authentication/SignIn'
 import SignUp from "./Authentication/SignUp"
 import ForgotPassword from "./Authentication/ForgotPassword"
 import BottomTab from "./Dashboard/BottomTab"
+
 
 
 
@@ -44,9 +46,11 @@ export {
     Pastpaper,
     ModelPaper,
     Guidance,
+    Pdfview,
 
     OnBOarding,
     Notification,
+    Feedback,
     
     AuthLayout,
     SignIn,

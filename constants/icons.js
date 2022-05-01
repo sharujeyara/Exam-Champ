@@ -54,6 +54,7 @@ const web_design = require("../assets/icons/web_design.png")
 const correct = require("../assets/icons/correct.png")
 const cancel = require("../assets/icons/cancel.png")
 const fb = require("../assets/icons/fb.png")
+const feedback = require("../assets/icons/feedback.png")
 
 export default {
     all,
@@ -109,5 +110,6 @@ export default {
     web_design,
     correct,
     cancel,
-    fb
+    fb,
+    feedback
 }

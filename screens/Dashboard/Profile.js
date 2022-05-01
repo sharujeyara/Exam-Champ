@@ -15,6 +15,8 @@ import { TextButton, IconButton, LineDivider, ProfileValue } from '../../Compone
 import { COLORS, SIZES, FONTS, constants, icons, dummyData, images } from '../../constants';
 import { auth } from '../../firebase';
 import { signOut } from 'firebase/auth';
+
+
 import { useNavigation } from "@react-navigation/native"
 
 
@@ -24,7 +26,7 @@ const Profile = () => {
 
     const handlelogout = async (e) => {
         signOut(auth)
-            .then((re) => { 
+            .then((re) => {
                 console.log('The user signed out');
                 navigation.push("SignIn");
             }
@@ -132,8 +134,8 @@ const Profile = () => {
                 <ProfileValue
                     icon={icons.profile}
                     label="Name"
-                    // value={name || ""}
-                    // onChange={(e) => setName(e.target.value)}
+                // value={name || ""}
+                // onChange={(e) => setName(e.target.value)}
                 />
 
                 <LineDivider />
@@ -141,7 +143,7 @@ const Profile = () => {
                 <ProfileValue
                     icon={icons.email}
                     label="Email"
-                    value= {auth.currentUser?.email}
+                    value={auth.currentUser?.email}
                 />
 
                 <LineDivider />
@@ -165,28 +167,37 @@ const Profile = () => {
     }
 
     function renderProfileSection2() {
-        return(
+        return (
             <View>
-            <View style={styles.profileSectionContainer}>
-                <ProfileValue
-                    icon={icons.password}
-                    label="Change password"
-                    value="Tap to more details"
-                />
+                <View style={styles.profileSectionContainer}>
+                    <ProfileValue
+                        icon={icons.password}
+                        label="Change password"
+                        value="Tap to more details"
+                    />
 
-                
-            </View>
+                    <LineDivider />
 
-            <TextButton
+                    <ProfileValue
+                        icon={icons.feedback}
+                        label="Feedback form"
+                        value="Send Feedback"
+                        onPress={() => navigation.navigate('Feedback', {  sharedElementPrefix: "ExamDetails" })}
+                    />
+
+
+                </View>
+
+                <TextButton
                     label="Log Out"
                     labelStyle={{ fontSize: 24, lineHeight: 24 }}
-                    
+
                     contentContainerStyle={{
                         height: 55,
                         alignItems: 'center',
                         marginTop: SIZES.padding,
                         borderRadius: SIZES.radius,
-                        
+
                     }}
 
                     onPress={handlelogout}
@@ -195,7 +206,7 @@ const Profile = () => {
             </View>
 
 
-            
+
         )
     }
     return (

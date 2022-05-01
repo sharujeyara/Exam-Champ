@@ -5,6 +5,7 @@ import { COLORS, SIZES, FONTS, icons, dummyData, images, constants } from '../co
 const FormInput = ({
     containerStyle,
     label,
+    multiline,
     placeholder,
     inputStyle,
     prependComponent,

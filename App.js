@@ -15,7 +15,8 @@ import {
     ModelPaper,
     Guidance,
     Notification,
-
+    Feedback,
+    Pdfview
 
 } from "./screens";
 
@@ -114,6 +115,16 @@ const App = () => {
                 <Stack.Screen
                     name="Guidance"
                     component={Guidance}
+                />
+
+                <Stack.Screen
+                    name="Feedback"
+                    component={Feedback}
+                />
+
+                <Stack.Screen
+                    name="Pdfview"
+                    component={Pdfview}
                 />
 
             </Stack.Navigator>

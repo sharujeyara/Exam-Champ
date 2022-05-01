@@ -17,6 +17,7 @@ const CategoryCard = ({ sharedElementPrefix, category, containerStyle, onPress }
     useEffect(() => {
         console.log(category)
     }, [])
+    
     return (
 
 

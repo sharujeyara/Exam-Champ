@@ -133,7 +133,7 @@ const Description = ({ navigation, route }) => {
                 }, headerShowOnScrollAnimatedStyle]}
                 >
                     <Text style={{ textAlign: 'center', color: COLORS.primary3, fontWeight: "bold", fontSize: 28 }}>
-                        {detail?.title}
+                       Description
                     </Text>
 
                 </Animated.View>
@@ -156,7 +156,7 @@ const Description = ({ navigation, route }) => {
                             lineHeight: 40
                         }}
                         >
-                            {detail?.title}
+                            Description
                         </Text>
 
                     </SharedElement>

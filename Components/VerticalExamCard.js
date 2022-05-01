@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
     View,
     Text,
@@ -10,7 +10,11 @@ import {
     COLORS, SIZES, FONTS, icons
 } from '../constants';
 
-const VerticalExamCard = ({ containerStyle, course, onPress}) => {
+const VerticalExamCard = ({ containerStyle, course,exam, onPress}) => {
+    useEffect(() => {
+        console.log(exam)
+    }, [])
+
     return (
         <TouchableOpacity style={{
             width: 180,

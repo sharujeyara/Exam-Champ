@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
 import Animated, {
     Extrapolate,
@@ -15,17 +15,42 @@ import { SharedElement } from "react-navigation-shared-element"
 
 import { Ionicons } from '@expo/vector-icons';
 
-import { IconButton, DetailsCard} from '../../Components'
+import { IconButton, DetailsCard, DescriptionCard } from '../../Components'
 
 import { COLORS, SIZES, FONTS, icons, dummyData, images } from '../../constants';
+import Description from './Description';
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "../../firebase"
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
 const HEADER_HEIGHT = 250;
 
 const ExamDetails = ({ navigation, route }) => {
+    const [detail, setDetail] = useState(null)
 
-    const { course, category, sharedElementPrefix } = route.params;
+    const getDetail = () => {
+        try {
+            const ref = collection(db, "Categories", exam.id, 'Exams')
+            // const q = query(ref, where('category.id', isEqualTo=='Exams'))
+            onSnapshot(ref, (snapshot) =>
+                setDetail((snapshot.docs.map((de) => ({ id: de.id, ...de.data() }))))
+            )
+
+        }
+        catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    useEffect(() => {
+        getDetail()
+    }, [])
+
+
+
+    const { course, exam, sharedElementPrefix } = route.params;
 
     const flatListRef = React.useRef()
     const scrollY = useSharedValue(0)
@@ -111,7 +136,7 @@ const ExamDetails = ({ navigation, route }) => {
                 <SharedElement id={'${sharedElementPrefix}-HorizontalExamCard-Bg-${course?.id}'}
                     style={[StyleSheet.absoluteFillObject]}
                 >
-                    <Image source={course?.thumbnail}
+                    <Image source={{ uri: exam.Bg }}
                         resizeMode='cover'
                         style={{
                             position: 'absolute',
@@ -133,7 +158,7 @@ const ExamDetails = ({ navigation, route }) => {
                 }, headerShowOnScrollAnimatedStyle]}
                 >
                     <Text style={{ textAlign: 'center', color: COLORS.primary3, fontWeight: "bold", fontSize: 22 }}>
-                        {course?.abbreviation}
+                        {exam.Abbre}
                     </Text>
 
                 </Animated.View>
@@ -156,7 +181,7 @@ const ExamDetails = ({ navigation, route }) => {
                             lineHeight: 40
                         }}
                         >
-                            {course?.abbreviation}
+                            {exam.Abbre}
                         </Text>
 
                     </SharedElement>
@@ -210,62 +235,158 @@ const ExamDetails = ({ navigation, route }) => {
 
     function renderResults() {
         return (
-            <AnimatedFlatList
-            
-                ref={flatListRef}
-                data={dummyData.details}
-                listKey='Details'
-                keyExtractor={item => 'Details-${item.id}'}
-                contentContainerStyle={{ paddingHorizontal: SIZES.padding }}
-                showsHorizontalScrollIndicator={false}
-                scrollEventThrottle={16}
-                keyboardDismissMode="on-drag"
-                onScroll={onScroll}
-                ListHeaderComponent={
-                    <View   style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginTop: 300,
-                        marginBottom: SIZES.base
-                    }}>
-                        <Text style={{
-                            flex: 1,
-                            fontSize: 22,
-                            fontWeight: 'bold',
-                            color: COLORS.primary3,
-                            marginBottom: SIZES.padding,
-                            lineHeight: 36
-                        }}>
-                            {course?.title}
-                        </Text>
-                    </View>
-                }
-                renderItem={({ item, index }) => (
-                    <DetailsCard
+            <View>
+
+                <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginTop: 300,
+                    marginBottom: SIZES.base
+                }}>
+                    <Text style={{
+                        flex: 1,
+                        fontSize: 22,
+                        fontWeight: 'bold',
+                        color: COLORS.primary3,
+                        marginBottom: SIZES.padding,
+                        lineHeight: 36,
+                        marginLeft: SIZES.padding
+                    }}
+                    >
+                        {exam.Title}
+                    </Text>
+                </View>
+
+                {/* {detail && detail.map((item, index) => ( */}
+                    <DetailsCard 
                     sharedElementPrefix="ExamDetails"
-                        detail={item}
+                        // detail={item}
                         containerStyle={{
                             marginVertical: SIZES.padding,
-                            marginTop: 5
+                            marginTop: 5,
+                            marginLeft: SIZES.padding,
+                            marginRight: SIZES.padding
                         }}
-                        onPress = {() =>navigation.navigate('Description',  {detail:item,  sharedElementPrefix:"ExamDetails"})}
+                        onPress={() => navigation.navigate('Description', { sharedElementPrefix: "ExamDetails" })}
                     />
-                )}
+                {/* ))
+                } */}
 
-            />
+                <DetailsCard
+                    detail={Description}
+                    containerStyle={{
+                        marginVertical: SIZES.padding,
+                        marginTop: 5,
+                        marginLeft: SIZES.padding,
+                        marginRight: SIZES.padding
+                    }}
+                    onPress={() => navigation.navigate('Pastpaper', { detail: Description, sharedElementPrefix: "ExamDetails" })}
+                />
+
+                <DetailsCard
+                    detail={Description}
+                    containerStyle={{
+                        marginVertical: SIZES.padding,
+                        marginTop: 5,
+                        marginLeft: SIZES.padding,
+                        marginRight: SIZES.padding
+                    }}
+                    onPress={() => navigation.navigate('ModelPaper', { detail: Description, sharedElementPrefix: "ExamDetails" })}
+                />
+
+                <DetailsCard
+                    detail={Description}
+                    containerStyle={{
+                        marginVertical: SIZES.padding,
+                        marginTop: 5,
+                        marginLeft: SIZES.padding,
+                        marginRight: SIZES.padding
+                    }}
+                    onPress={() => navigation.navigate('Guidance', { detail: Description, sharedElementPrefix: "ExamDetails" })}
+                />
+
+
+            </View>
+
+            // <AnimatedFlatList
+
+            //     ref={flatListRef}
+            //     data={dummyData.details}
+            //     listKey='Details'
+            //     keyExtractor={item => 'Details-${item.id}'}
+            //     contentContainerStyle={{ paddingHorizontal: SIZES.padding }}
+            //     showsHorizontalScrollIndicator={false}
+            //     scrollEventThrottle={16}
+            //     keyboardDismissMode="on-drag"
+            //     onScroll={onScroll}
+            //     ListHeaderComponent={
+            //         <View style={{
+            //             flexDirection: 'row',
+            //             alignItems: 'center',
+            //             justifyContent: 'center',
+            //             marginTop: 300,
+            //             marginBottom: SIZES.base
+            //         }}>
+            //             <Text style={{
+            //                 flex: 1,
+            //                 fontSize: 22,
+            //                 fontWeight: 'bold',
+            //                 color: COLORS.primary3,
+            //                 marginBottom: SIZES.padding,
+            //                 lineHeight: 36
+            //             }}>
+            //                 {exam.Title}
+            //             </Text>
+            //         </View>
+            //     }
+            //     renderItem={({ item, index }) => (
+            //         <DetailsCard
+            //             sharedElementPrefix="ExamDetails"
+            //             detail={item}
+            //             containerStyle={{
+            //                 marginVertical: SIZES.padding,
+            //                 marginTop: 5
+            //             }}
+            //             onPress={() => navigation.navigate('Description', { detail: item, sharedElementPrefix: "ExamDetails" })}
+            //         />
+
+
+            //         )}
+
+            //         />
 
         )
     }
 
-  
+    // function renderDescription() {
+    //     return (
+    //         <View>
+    //             {detail && detail.map((item, index) => (
+    //                 <DescriptionCard key={item.id}
+    //                     sharedElementPrefix="ExamDetails"
+    //                     detail={item}
+    //                     containerStyle={{
+    //                         marginVertical: SIZES.padding,
+    //                         marginTop: 5
+    //                     }}
+    //                     onPress={() => navigation.navigate("Description", { detail: item, sharedElementPrefix: "ExamDetails", otherParam: 'anything you want here' })}
+    //                 />
+    //             ))
+    //             }
+
+    //         </View>
+    //     )
+    // }
+
     return (
         <View style={{ flex: 1, backgroundColor: COLORS.white }}>
 
             {/* Title */}
             {renderResults()}
 
-           
+            {/* {renderDescription()} */}
+
 
             {/* Header */}
             {renderHeader()}

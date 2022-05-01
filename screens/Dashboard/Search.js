@@ -14,7 +14,7 @@ import Animated from 'react-native-reanimated';
 
 import { TextButton, CategoryCard } from '../../Components';
 import { COLORS, SIZES, FONTS, constants, icons, dummyData, images } from '../../constants';
-import { collection, onSnapshot ,orderBy, query} from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query, collectionGroup } from "firebase/firestore";
 import { db } from "../../firebase"
 
 
@@ -23,10 +23,16 @@ const Search = () => {
 
     const [category, setCategory] = useState(null)
 
+
+    const [enter, setEnter] = useState(false);
+    const [masterArray, setMasterArrary] = useState(null)
+    const [filterArray, setFilterArray] = useState(null)
+    const [search, setSearch] = useState()
+
     const getCategory = () => {
         try {
             const ref = collection(db, "Categories")
-            const q = query(ref,  orderBy("C_Name", "desc"));
+            const q = query(ref, orderBy("C_Name", "desc"));
             onSnapshot(q, (snapshot) =>
                 setCategory((snapshot.docs.map((cat) => ({ id: cat.id, ...cat.data() }))))
             )
@@ -42,6 +48,84 @@ const Search = () => {
         getCategory()
         // console.log(category[0])
     }, [])
+
+
+    const getExam = () => {
+        try {
+            const ref = collectionGroup(db, "Exams")
+            onSnapshot(ref, (snapshot) => {
+                if (!masterArray) {
+                    setMasterArrary((snapshot.docs.map((ex) => ({ id: ex.id, ...ex.data() }))))
+                }
+                if (!filterArray) {
+                    setFilterArray((snapshot.docs.map((ex) => ({ id: ex.id, ...ex.data() }))))
+                    // console.log(users)
+                }
+
+            }
+            )
+
+        }
+        catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    useEffect(() => {
+        getExam()
+        // console.log(category[0])
+    }, [])
+
+    const SearchFilter = (text) => {
+        if (text) {
+            setEnter(true)
+            const newData = masterArray.filter((item) => {
+                const itemData = item.d_name ? item.d_name.toUpperCase()
+                    : "".toUpperCase();
+                const textData = text.toUpperCase()
+                return itemData.indexOf(textData) > -1
+            });
+            setFilterArray(newData)
+            setSearch(text)
+        }
+        else {
+            setEnter(false)
+            setFilterArray(masterArray)
+            setSearch(text)
+        }
+
+
+    }
+
+    const ItemView = ({ item }) => {
+
+
+        return (
+            <TouchableOpacity onPress={() => {
+                navigation.navigate('ExamDetails', {
+                    exam: item.Abbre,
+                })
+            }}>
+                <Text style={{
+                    fontSize: 18,
+                    paddingBottom: 5
+                }}>{item.Abbre}</Text>
+
+            </TouchableOpacity>
+
+        )
+
+
+    }
+
+    useEffect(() => {
+        console.log("filter" +filterArray)
+    },[filterArray])
+
+
+
+
 
     const navigation = useNavigation();
 
@@ -119,26 +203,26 @@ const Search = () => {
 
 
                 < FlatList
-                    data = {category }
-                    numColumns = {0}
-                    scrollEnabled = { false}
+                    data={category}
+                    numColumns={0}
+                    scrollEnabled={false}
                     // listKey="BrowseCategories"
-                    keyExtractor = { item => 'examitem.id..toString()'}
-                contentContainerStyle={{ marginTop: SIZES.radius }}
-                renderItem={({ item, index }) => (
-                    <CategoryCard key={index}
-                        sharedElementPrefix="Search"
-                        category={item}
-                        containerStyle={{
-                            height: 130,
-                            width: 350,
-                            marginTop: SIZES.radius,
-                            marginLeft: SIZES.padding,
-                            marginRight:SIZES.padding
-                        }}
-                        onPress={() => navigation.navigate("ExamListing", { category: item, sharedElementPrefix: "Search", otherParam: 'anything you want here' })}
-                    />
-                )}
+                    keyExtractor={item => 'examitem.id..toString()'}
+                    contentContainerStyle={{ marginTop: SIZES.radius }}
+                    renderItem={({ item, index }) => (
+                        <CategoryCard key={index}
+                            sharedElementPrefix="Search"
+                            category={item}
+                            containerStyle={{
+                                height: 130,
+                                width: 350,
+                                marginTop: SIZES.radius,
+                                marginLeft: SIZES.padding,
+                                marginRight: SIZES.padding
+                            }}
+                            onPress={() => navigation.navigate("ExamListing", { category: item, sharedElementPrefix: "Search", otherParam: 'anything you want here' })}
+                        />
+                    )}
 
                 />
             </View>
@@ -147,14 +231,16 @@ const Search = () => {
 
     function renderSearchBar() {
         return (
-            <Animated.View style={{
+            
+            <View style={{
                 position: 'absolute',
                 top: 50,
                 left: 0,
                 right: 0,
                 paddingHorizontal: SIZES.padding,
                 height: 50
-            }}>
+            }}
+            >
                 <View style={{
                     flex: 1,
                     flexDirection: 'row',
@@ -178,12 +264,37 @@ const Search = () => {
                         fontWeight: 'bold',
 
                     }}
-                        value=""
+                        value={search}
+                        onChangeText={(value) => SearchFilter(value)}
                         placeholder='Search for Exams'
                         placeholderTextColor={COLORS.gray20}
                     />
+
+                   
+
                 </View>
-            </Animated.View>
+
+                {enter ?
+                        <View style={{
+                            backgroundColor: "#eff7fa",
+                            width: "80%",
+                            marginTop: 13,
+                            paddingLeft: 25,
+                            marginLeft: 40,
+                            zIndex: 500
+                        }}
+                        >
+                            <FlatList
+                                data={filterArray}
+                                keyExtractor={(item, index) => index.toString()}
+                                renderItem={ItemView}
+                            // ItemSeparatorComponent={ItemSpearatorView}
+                            />
+                        </View> : null}
+
+
+
+            </View>
         )
     }
     return (

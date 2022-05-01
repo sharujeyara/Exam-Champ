@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect} from 'react';
 import {
     View,
     Text,
@@ -8,17 +8,15 @@ import {
     StyleSheet
 } from 'react-native';
 
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { SharedElement } from "react-navigation-shared-element"
 
 import { COLORS, SIZES, FONTS, icons } from '../constants';
 
 
-const DetailsCard = ({ containerStyle, detail, onPress }) => {
+const PastpaperCard = ({ containerStyle, exam, onPress }) => {
 
-    useEffect(() => {
-        console.log(detail)
-    }, [])
+   
 
     return (
 
@@ -28,7 +26,7 @@ const DetailsCard = ({ containerStyle, detail, onPress }) => {
             paddingHorizontal: SIZES.padding,
             borderWidth: 1,
             borderRadius: 10,
-            height: 70,
+            height: 80,
             borderColor: COLORS.white,
             paddingTop: 5,
             backgroundColor: '#FFFFFF',
@@ -42,7 +40,7 @@ const DetailsCard = ({ containerStyle, detail, onPress }) => {
             onPress={onPress}
         >
             <View style={{
-                marginTop: 10,
+                marginTop: 14,
                 flexDirection: 'row',
                 width: 40,
                 height: 40,
@@ -53,36 +51,30 @@ const DetailsCard = ({ containerStyle, detail, onPress }) => {
 
             }}
             >
-                <MaterialIcons name="description" size={24} color={COLORS.primary} />
-
+                <Ionicons name="book-sharp" size={24} color={COLORS.primary} />
             </View>
 
             {/* Title */}
-            <SharedElement id={'${sharedElementPrefix}-DetailsCard-Title-${detail?.id}'}
+            <SharedElement id={'${sharedElementPrefix}-HorizontalExamCard-Title-${course?.id}'}
                 style={[StyleSheet.absoluteFillObject]}
             >
                 <View style={{
-                    flex: 1, marginLeft: 85, marginTop: 23
+                    flex: 1, marginLeft: 85, marginTop: 30
 
                 }}>
-                    <Text style={{ color: COLORS.black,fontWeight:'500', fontSize: 18, lineHeight: 20 }}>
-                        desc
+                    <Text style={{ color: COLORS.black, fontWeight: 'bold', fontSize: 18, lineHeight: 20 }}>
+                        Pastpaper - 01
                     </Text>
 
                 </View>
             </SharedElement>
 
-            <View style={{
-                flexDirection:'row', 
-                marginLeft: 220, 
-                marginTop: 15,
-            
-            }}>
-                <MaterialCommunityIcons name="greater-than" size={24} color="black" />
-            </View>
+
 
 
         </TouchableOpacity>
+
     )
 }
-export default DetailsCard
+
+export default PastpaperCard;

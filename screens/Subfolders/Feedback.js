@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react'
-import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
 import Animated, {
     Extrapolate,
     interpolate,
@@ -15,44 +15,63 @@ import { SharedElement } from "react-navigation-shared-element"
 
 import { Ionicons } from '@expo/vector-icons';
 
-import { IconButton, HorizontalExamCard } from '../../Components'
-
 import { COLORS, SIZES, FONTS, icons, dummyData, images } from '../../constants';
-
-import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { db } from "../../firebase"
-
+import { FormInput, TextButton } from '../../Components';
+import { collection, setDoc, doc,serverTimestamp,onSnapshot} from 'firebase/firestore';
+import { db } from '../../firebase';
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
 const HEADER_HEIGHT = 250;
 
+const Feedback = ({ navigation }) => {
 
-const ExamListing = ({ navigation, route }) => {
-
-    const [exam, setExam] = useState(null)
-
-    const getExam = () => {
-        try {
-            const ref = collection(db, "Categories", category.id, 'Exams')
-            // const q = query(ref, where('category.id', isEqualTo=='Exams'))
-            onSnapshot(ref, (snapshot) =>
-                setExam((snapshot.docs.map((ex) => ({ id: ex.id, ...ex.data() }))))
-            )
-
-        }
-        catch (error) {
-            console.log(error)
-        }
-
-    }
-
-    useEffect(() => {
-        getExam()
-    }, [])
+    const [feedback, setFeedback] = useState([]);
+    const [User, setUser] = useState()
 
 
+    // const getuser = async () =>
+    // {
+    //   try {
+    
+    //     const ref = doc(db, "users")
+    //     onSnapshot(ref, (snapshot) => {
+    //         // console.log(snapshot.data())
+    
+    //         setUser(snapshot.data())
+                   
+    //         })
+    //     console.log(User)
+        
+    //   }
+    //   catch (error) {
+    //     console.log(error)
+    //   }
+      
+    // }
+      
+    
 
-    const { category, sharedElementPrefix } = route.params;
+    const submitFeedback = async () => {
+   
+        const Ref = collection(db, "Feedback")
+        
+        await setDoc(doc(Ref),
+          {
+            
+            review: feedback,
+            
+          }).then(
+          navigation.goBack()
+            
+          ).catch((error) =>
+            console.log(error))
+        
+      }
+    //   useEffect(() => {
+    //    getuser()
+       
+       
+    //   }, [])
 
     const flatListRef = React.useRef()
     const scrollY = useSharedValue(0)
@@ -71,7 +90,7 @@ const ExamListing = ({ navigation, route }) => {
 
         const inputRange = [0, HEADER_HEIGHT - 50]
 
-        headerSharedValue.value = withDelay(1000, withTiming(0, { duration: 1000 }))
+        headerSharedValue.value = withDelay(900, withTiming(0, { duration: 900 }))
 
         // Show popup mobile image
         const headerFadeAnimatedStyle = useAnimatedStyle(() => {
@@ -101,10 +120,10 @@ const ExamListing = ({ navigation, route }) => {
         // Hide Title and mobile image while scroll
         const headerHideOnScrollAnimatedStyle = useAnimatedStyle(() => {
             return {
-                opacity: interpolate(scrollY.value, [80,0], [0,1], Extrapolate.CLAMP),
+                opacity: interpolate(scrollY.value, [80, 0], [0, 1], Extrapolate.CLAMP),
                 transform: [
                     {
-                        translateY:interpolate(scrollY.value, inputRange, [0,200], Extrapolate.CLAMP)
+                        translateY: interpolate(scrollY.value, inputRange, [0, 200], Extrapolate.CLAMP)
                     }
                 ]
             }
@@ -112,16 +131,15 @@ const ExamListing = ({ navigation, route }) => {
 
         // Show title after scroll the page
         const headerShowOnScrollAnimatedStyle = useAnimatedStyle(() => {
-            return{
-                opacity: interpolate(scrollY.value, [80,0], [1,0], Extrapolate.CLAMP),
+            return {
+                opacity: interpolate(scrollY.value, [80, 0], [1, 0], Extrapolate.CLAMP),
                 transform: [
                     {
-                        translateY:interpolate(scrollY.value, inputRange, [50,130], Extrapolate.CLAMP)
+                        translateY: interpolate(scrollY.value, inputRange, [50, 130], Extrapolate.CLAMP)
                     }
                 ]
             }
         })
-
 
         return (
             <Animated.View style={[{
@@ -136,10 +154,10 @@ const ExamListing = ({ navigation, route }) => {
             }, headerHeightAnimatedStyle]}
             >
                 {/* Background Image */}
-                <SharedElement id={'${sharedElementPrefix}-CategoryCard-Bg-${category?.id}'}
+                <SharedElement id={'${sharedElementPrefix}-HorizontalExamCard-Bg-${course?.id}'}
                     style={[StyleSheet.absoluteFillObject]}
                 >
-                    <Image source={{uri:category.Bg}}
+                    <Image source={require("../../assets/images/bg_1.png")}
                         resizeMode='cover'
                         style={{
                             position: 'absolute',
@@ -152,19 +170,6 @@ const ExamListing = ({ navigation, route }) => {
                 </SharedElement>
 
                 {/* Title */}
-                {/* After scrolling Title */}
-                <Animated.View style={[{
-                    position:'absolute',
-                    top:-80,
-                    left:0,
-                    right:0
-                }, headerShowOnScrollAnimatedStyle]}
-                >
-                    <Text style={{textAlign:'center', color:COLORS.primary3, fontWeight:"bold", fontSize:22}}>
-                    {category.C_Name}
-                    </Text>
-
-                </Animated.View>
 
                 {/* Firstshow title */}
                 <Animated.View style={[{
@@ -173,18 +178,18 @@ const ExamListing = ({ navigation, route }) => {
                     left: 30
                 }, headerHideOnScrollAnimatedStyle]}
                 >
-                    <SharedElement id={'${sharedElementPrefix}-CategoryCard-Title-${category?.id}'}
+                    <SharedElement id={'${sharedElementPrefix}-HorizontalExamCard-Abbreviation-${course?.id}'}
                         style={[StyleSheet.absoluteFillObject]}
                     >
                         <Text style={{
                             position: 'absolute',
                             color: COLORS.primary3,
                             fontWeight: 'bold',
-                            fontSize: 36,
+                            fontSize: 40,
                             lineHeight: 40
                         }}
                         >
-                            {category.C_Name}
+                            Feedback
                         </Text>
 
                     </SharedElement>
@@ -214,7 +219,6 @@ const ExamListing = ({ navigation, route }) => {
                     </TouchableOpacity>
                 </View>
 
-
                 {/* Popup Image */}
                 <Animated.Image source={images.mobile_image}
                     resizeMode="contain"
@@ -239,52 +243,88 @@ const ExamListing = ({ navigation, route }) => {
 
     function renderResults() {
         return (
-            <AnimatedFlatList
-                ref={flatListRef}
-                data={exam}
-                keyExtractor={item => 'item.id..toString()'}
-                contentContainerStyle={{ paddingHorizontal: SIZES.padding }}
-                showsHorizontalScrollIndicator={false}
-                scrollEventThrottle={16}
-                keyboardDismissMode="on-drag"
-                onScroll={onScroll}
-                ListHeaderComponent={
-                    <View  style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginTop: 320,
-                        marginBottom: SIZES.base
-                    }}>
-                        <Text style={{
-                            flex: 1,
-                            fontSize: 24,
-                            fontWeight: 'bold',
-                            color: COLORS.primary3,
-                            marginBottom: SIZES.padding
-                        }}>
-                            All Island Exams
-                        </Text>
-                    </View>
-                }
+            <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginTop: 320,
+                marginBottom: SIZES.base
+            }}
+            >
+                <View style={{
+                    flex: 1,
+                    marginTop: SIZES.padding * 2,
+                    marginRight: SIZES.padding,
+                    marginLeft: SIZES.padding
+                }}
+                >
 
-                renderItem={({ item, index }) => (
-                    <HorizontalExamCard
-                    sharedElementPrefix="ExamLisiting"
-                        exam={item}
-                        containerStyle={{
-                            marginVertical: SIZES.padding,
-                            marginTop: 5
+
+                    <TextInput
+                        style={{
+                            fontSize: 18,
+                            color: COLORS.black,
+                            marginTop: 15,
+                            paddingBottom: 10,
+                            borderBottomWidth: 0.7,
+                            borderColor: "#b6b6b6",
+                            height: 150,
+                            margin: 5,
+                            padding: 10,
+                            flexDirection: 'row',
+                            borderRadius: SIZES.radius,
+                            backgroundColor: COLORS.white,
+                            shadowColor: COLORS.gray90,
+                            shadowOpacity: 0.8,
+                            elevation: 6,
+                            shadowRadius: 15,
+                            shadowOffset: { width: 1, height: 13 },
                         }}
-                        onPress = {() =>navigation.navigate('ExamDetails', {exam:item,  sharedElementPrefix:"ExamLisiting"})}
+                        pointerEvents="none" 
+                        value={feedback}
+                        onChangeText={(value) => setFeedback(value)}
+                        multiline
+                        autoCapitalize='characters'
+                        placeholder='Give feedback about this app'
+                        keyboardType='default'
+                        
+                        appendComponent={
+                            <View style={{
+                                justifyContent: 'center',
+                                marginHorizontal: SIZES.padding,
+
+
+                            }}
+                            >
+
+                            </View>
+                        }
                     />
-                )}
-            />
+
+                    <TextButton
+                        label="Submit"
+                        labelStyle={{ fontSize: 24, lineHeight: 24 }}
+                        contentContainerStyle={{
+                            height: 55,
+                            alignItems: 'center',
+                            marginTop: SIZES.padding,
+                            borderRadius: SIZES.radius,
+
+                        }}
+                        onPress={() => submitFeedback()}
+
+
+                    />
+
+                </View>
+
+            </View>
         )
     }
-    return (
-        <View style={{  flex: 1, backgroundColor: COLORS.white }}>
 
-            {/* Results */}
+    return (
+        <View style={{ flex: 1, backgroundColor: COLORS.white }}>
+
+            {/* Title */}
             {renderResults()}
 
             {/* Header */}
@@ -293,16 +333,5 @@ const ExamListing = ({ navigation, route }) => {
     )
 }
 
-ExamListing.sharedElements = (route, otherRoute, showing) => {
-    const { category, sharedElementPrefix } = route.params;
-    return [
-        {
-            id: '${sharedElementPrefix}-CategoryCard-Bg-${category?.id}'
-        },
 
-        {
-            id: '${sharedElementPrefix}-CategoryCard-Title-${category?.id}'
-        }
-    ]
-}
-export default ExamListing;
+export default Feedback;
